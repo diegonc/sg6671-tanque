@@ -1,4 +1,4 @@
-function ConoDrawContext(gl, pM, mM) {
+function CilindroDrawContext(gl, pM, mM) {
     // GL Context
     this.gl = gl;
     // Projection matrix
@@ -7,68 +7,52 @@ function ConoDrawContext(gl, pM, mM) {
     this.mM = mM;
 }
 
-function Cono(cortes, franjas, zmax) {
-    console.assert(zmax === undefined || zmax <= 1.0, "zmax > 1");
-
+function Cilindro(cortes, franjas) {
     var CORTES = cortes;
     var FRANJAS = franjas;
     var PASO = (Math.PI * 2) / (CORTES - 1);
-    var RADIO_MAX = 1;
-    var Z_MAX = zmax || 1;
+    var RADIO = 1;
+    var Z_MAX = 1;
 
-    this.zmax = zmax;
-
-    this.cono = [];
+    this.cilindro = [];
     this.indices = [];
 
-    // El cono se define como una grilla de
-    // CORTES x (FRANJAS + 1 + 1)
-    this.indices = generarIndexBuffer(CORTES, (FRANJAS + 2));
-
-    var z = Z_MAX;
-    var radio = (1 - z) * RADIO_MAX;
-    var PASO_Z = Z_MAX / (FRANJAS - 1);
-
-    // La primera fila de la grilla corresponde al
+    // El cilindro se define como una grilla de
+    // CORTES x (FRANJAS + 1 + 2)
+    this.indices = generarIndexBuffer(CORTES, (FRANJAS + 3));
+    
+    // La primer fila de la grilla corresponde al
     // vertice central de la tapa superior.
     for (var i=0; i < CORTES; i++) {
-        this.cono.push(0.0);
-        this.cono.push(0.0);
-        this.cono.push(z);
+        this.cilindro.push(0.0);
+        this.cilindro.push(0.0);
+        this.cilindro.push(Z_MAX);
     }
-
-    // La siguientes FRANJAS filas de
-    //  la grilla corresponden
-    // al cuerpo del cono
-    // El radio sigue la siguiente recta:
-    //     z = 1 - 1 / RADIO_MAX * r
-    // despejando r:
-    //     r = (1 - z) * RADIO_MAX
-    for (var i=0; i < (FRANJAS); i++) {
+    // Las (FRANJAS + 1) filas intermedias corresponden
+    // al cuerpo del cilindro.
+    var PASO_Z = Z_MAX / FRANJAS;
+    for (var i=0; i < (FRANJAS + 1); i++) {
+        var z = Z_MAX - i * PASO_Z;
         for (var j=0; j < CORTES; j++) {
             var a = j * PASO;
-            this.cono.push(radio * Math.cos(a));
-            this.cono.push(radio * Math.sin(a));
-            this.cono.push(z);
+            this.cilindro.push(RADIO * Math.cos(a));
+            this.cilindro.push(RADIO * Math.sin(a));
+            this.cilindro.push(z);
         }
-    
-        z -= PASO_Z;
-        radio = (1 - z) * RADIO_MAX;
     }
-
     // La ultima fila de la grilla corresponde al
     // vertice central de la tapa inferior.
     for (var i=0; i < CORTES; i++) {
-        this.cono.push(0.0);
-        this.cono.push(0.0);
-        this.cono.push(0.0);
+        this.cilindro.push(0.0);
+        this.cilindro.push(0.0);
+        this.cilindro.push(0.0);
     }
 
     this.colors = [];
     // Colores de los vertices del cilindro
-    for (var i = 0; i < (FRANJAS + 2); i++) {
+    for (var i = 0; i < (FRANJAS + 3); i++) {
       for (var j = 0; j < CORTES; j++) {
-        if (i % 2 === 0) {
+        if (j % 2 === 0) {
             this.colors.push(0.7);
             this.colors.push(0.7);
             this.colors.push(0.7);
@@ -106,15 +90,10 @@ function Cono(cortes, franjas, zmax) {
         }                                       ";
 }
 
-Cono.prototype.getRadioMin = function() {
-    // r = (1 - z) * RADIO_MAX
-    return (1 - this.zmax);
-};
-
-Cono.prototype.initGL = function(gl) {
+Cilindro.prototype.initGL = function(gl) {
     this.vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.cono), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.cilindro), gl.STATIC_DRAW);
 
     this.colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer);
@@ -147,7 +126,7 @@ Cono.prototype.initGL = function(gl) {
                             "uMVMatrix");
 };
 
-Cono.prototype.draw = function(dc) {
+Cilindro.prototype.draw = function(dc) {
     var gl = dc.gl;
     
     gl.useProgram(this.program.prg);

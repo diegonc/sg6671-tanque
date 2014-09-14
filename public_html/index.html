@@ -11,10 +11,12 @@
         <script type="text/javascript" src="js/shader-utils.js"></script>
 
         <script type="text/javascript" src="js/cono.js"></script>
+        <script type="text/javascript" src="js/cilindro.js"></script>
         
         <script type="text/javascript">
             
             var cono = new Cono(64, 10, 0.5);
+            var cilindro = new Cilindro(64, 10);
             var frame = 0;
             
             function drawScene() {
@@ -27,7 +29,7 @@
                 
                 var camara = mat4.create();
                 mat4.identity(camara);
-                mat4.translate(camara, [0, 0, -5]);
+                mat4.translate(camara, [0, 0, -10]);
                 mat4.rotateX(camara, Math.PI / 8);
                 
                 var rotX = mat4.create();
@@ -44,6 +46,22 @@
                 mat4.multiply(mvMatrix, rotZ);
                 
                 cono.draw(new ConoDrawContext(gl, pMatrix, mvMatrix));
+
+                var radioMin = cono.getRadioMin();
+                var escala = mat4.create();
+                mat4.identity(escala);
+                mat4.scale(escala, [radioMin, radioMin, 1]);
+                var posY = mat4.create();
+                mat4.identity(posY);
+                mat4.translate(posY,[0, cono.zmax, 0]);
+                
+                mat4.identity(mvMatrix);
+                mat4.multiply(mvMatrix, camara);
+                mat4.multiply(mvMatrix, posY);
+                mat4.multiply(mvMatrix, rotX);
+                mat4.multiply(mvMatrix, rotZ);
+                mat4.multiply(mvMatrix, escala);
+                cilindro.draw(new CilindroDrawContext(gl, pMatrix, mvMatrix));
             }
             
             function tick() {
@@ -62,6 +80,7 @@
                     gl.enable(gl.DEPTH_TEST);
                     
                     cono.initGL(gl);
+                    cilindro.initGL(gl);
                     
                     tick();
                 }

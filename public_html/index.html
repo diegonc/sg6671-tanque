@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Escena 3D</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
+        <script type="text/javascript" src="js/webgl-utils.js"></script>
+        <script type="text/javascript" src="js/tstrip-utils.js"></script>
+        <script type="text/javascript" src="js/shader-utils.js"></script>
+
+        <script type="text/javascript" src="js/cono.js"></script>
+        
+        <script type="text/javascript">
+            
+            var cono = new Cono(64, 10, 0.5);
+            var frame = 0;
+            
+            function drawScene() {
+                gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+                gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+                
+                var pMatrix = mat4.create();
+                mat4.perspective(30, gl.viewportWidth / gl.viewportHeight,
+                    0.1, 100.0, pMatrix);
+                
+                var camara = mat4.create();
+                mat4.identity(camara);
+                mat4.translate(camara, [0, 0, -5]);
+                mat4.rotateX(camara, Math.PI / 12);
+                
+                var rotX = mat4.create();
+                mat4.identity(rotX);
+                mat4.rotate(rotX, -Math.PI / 2, [1, 0, 0]);
+                var rotZ = mat4.create();
+                mat4.identity(rotZ);
+                mat4.rotate(rotZ, frame*0.01, [0, 0, 1]);
+                
+                var mvMatrix = mat4.create();
+                mat4.identity(mvMatrix);
+                mat4.multiply(mvMatrix, camara);
+                mat4.multiply(mvMatrix, rotX);
+                mat4.multiply(mvMatrix, rotZ);
+                
+                cono.draw(new ConoDrawContext(gl, pMatrix, mvMatrix));
+            }
+            
+            function tick() {
+                requestAnimFrame(tick);
+                frame += 1;
+                drawScene();
+            }
+            
+            function start() {
+                var canvas = document.getElementById("escena");
+                gl = WebGLUtils.setupWebGL(canvas);
+                if (gl) {
+                    gl.viewportHeight = canvas.height;
+                    gl.viewportWidth = canvas.width;
+                    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                    gl.enable(gl.DEPTH_TEST);
+                    
+                    cono.initGL(gl);
+                    
+                    tick();
+                }
+            }
+        </script>
+    </head>
+    <body onload="start();">
+        <canvas
+            id="escena"
+            width="800"
+            height="600">
+        </canvas>        
+    </body>
+</html>

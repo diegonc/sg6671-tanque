@@ -65,7 +65,7 @@ function Cono(cortes, franjas, zmax) {
     }
 
     this.colors = [];
-    // Colores de los vertices del cilindro
+    // Colores de los vertices del cono
     for (var i = 0; i < (FRANJAS + 2); i++) {
       for (var j = 0; j < CORTES; j++) {
         if (i % 2 === 0) {

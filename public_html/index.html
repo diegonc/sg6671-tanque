@@ -14,12 +14,14 @@
         <script type="text/javascript" src="js/cono.js"></script>
         <script type="text/javascript" src="js/cilindro.js"></script>
         <script type="text/javascript" src="js/caja.js"></script>
+        <script type="text/javascript" src="js/canion.js"></script>
         
         <script type="text/javascript">
             
             var cono = new Cono(64, 10, 0.5);
             var cilindro = new Cilindro(64, 10);
             var caja = new Caja(4, 5);
+            var canion = new Canion();
             var frame = 0;
             
             function drawScene() {
@@ -32,9 +34,9 @@
                 
                 var camara = mat4.create();
                 mat4.identity(camara);
-                mat4.translate(camara, [0, 0, -10]);
+                mat4.translate(camara, [0, 0, -18]);
                 mat4.rotateX(camara, Math.PI / 8);
-                
+                /*
                 var rotX = mat4.create();
                 mat4.identity(rotX);
                 mat4.rotate(rotX, -Math.PI / 2, [1, 0, 0]);
@@ -84,6 +86,17 @@
                 mat4.multiply(mvMatrix, rotZ);
                 mat4.multiply(mvMatrix, escala);
                 cilindro.draw(new CilindroDrawContext(gl, pMatrix, mvMatrix));
+                        */
+
+                var rotZ = mat4.create();
+                mat4.identity(rotZ);
+                mat4.rotate(rotZ, frame*0.01, [0, 0, 1]);
+
+                var mvMatrix = mat4.create();
+                mat4.identity(mvMatrix);
+                mat4.multiply(mvMatrix, camara);
+                mat4.multiply(mvMatrix, rotZ);
+                canion.draw(new CanionDrawContext(gl, pMatrix, mvMatrix));
             }
             
             function tick() {
@@ -104,6 +117,7 @@
                     cono.initGL(gl);
                     cilindro.initGL(gl);
                     caja.initGL(gl);
+                    canion.initGL(gl);
                     
                     tick();
                 }

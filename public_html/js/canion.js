@@ -24,7 +24,7 @@ Canion.prototype.createCilMatrix = function() {
     var m = mat4.create();
     mat4.identity(m);
     mat4.translate(m, [0.5, 0.5, this.cilPos]);
-    mat4.scale(m, [0.35, 0.35, 3]);
+    mat4.scale(m, [0.35, 0.35, 2]);
     return m;
 };
 

@@ -9,6 +9,7 @@
         <script type="text/javascript" src="js/webgl-utils.js"></script>
         <script type="text/javascript" src="js/tstrip-utils.js"></script>
         <script type="text/javascript" src="js/shader-utils.js"></script>
+        <script type="text/javascript" src="js/shader-programs.js"></script>
 
         <script type="text/javascript" src="js/cono.js"></script>
         <script type="text/javascript" src="js/cilindro.js"></script>
@@ -48,6 +49,23 @@
                 mat4.multiply(mvMatrix, rotZ);
                 
                 cono.draw(new ConoDrawContext(gl, pMatrix, mvMatrix));
+                
+                var escalaCaja = mat4.create();
+                mat4.identity(escalaCaja);
+                mat4.scale(escalaCaja, [0.2, 0.2, 1]);
+                var transCaja = mat4.create();
+                mat4.identity(transCaja);
+                mat4.translate(transCaja, [cono.getRadioMin(), cono.zmax + 0.8, cono.getRadioMin()]);
+                var rotY = mat4.create();
+                mat4.identity(rotY);
+                mat4.rotate(rotY, -Math.PI / 2, [0, 1, 0]);
+                
+                mat4.identity(mvMatrix);
+                mat4.multiply(mvMatrix, camara);
+                //mat4.multiply(mvMatrix, rotX);
+                mat4.multiply(mvMatrix, transCaja);
+                mat4.multiply(mvMatrix, rotY);
+                mat4.multiply(mvMatrix, escalaCaja);
                 
                 caja.draw(new CajaDrawContext(gl, pMatrix, mvMatrix));
 

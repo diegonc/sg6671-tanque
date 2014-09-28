@@ -15,6 +15,7 @@
         <script type="text/javascript" src="js/cilindro.js"></script>
         <script type="text/javascript" src="js/caja.js"></script>
         <script type="text/javascript" src="js/canion.js"></script>
+        <script type="text/javascript" src="js/torreta.js"></script>
         
         <script type="text/javascript">
             
@@ -22,6 +23,7 @@
             var cilindro = new Cilindro(64, 10);
             var caja = new Caja(4, 5);
             var canion = new Canion();
+            var torreta = new Torreta();
             var frame = 0;
             
             function drawScene() {
@@ -96,7 +98,7 @@
                 mat4.identity(mvMatrix);
                 mat4.multiply(mvMatrix, camara);
                 mat4.multiply(mvMatrix, rotZ);
-                canion.draw(new CanionDrawContext(gl, pMatrix, mvMatrix));
+                torreta.draw(new TorretaDrawContext(gl, pMatrix, mvMatrix));
             }
             
             function tick() {
@@ -118,6 +120,7 @@
                     cilindro.initGL(gl);
                     caja.initGL(gl);
                     canion.initGL(gl);
+                    torreta.initGL(gl);
                     
                     tick();
                 }

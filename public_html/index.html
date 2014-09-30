@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <script type="text/javascript" src="js/MD5.js"></script>
+        <script type="text/javascript" src="js/hashCode.js"></script>
         <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
         <script type="text/javascript" src="js/webgl-utils.js"></script>
         <script type="text/javascript" src="js/tstrip-utils.js"></script>
@@ -92,7 +94,7 @@
 
                 var rotZ = mat4.create();
                 mat4.identity(rotZ);
-                mat4.rotate(rotZ, frame*0.01, [0, 0, 1]);
+                mat4.rotate(rotZ, frame*0.01, [1, 0, 0]);
 
                 var mvMatrix = mat4.create();
                 mat4.identity(mvMatrix);

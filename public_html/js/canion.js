@@ -5,8 +5,8 @@ function CanionDrawContext(gl, pM, mvM) {
 }
 
 function Canion() {
-    this.caja = new Caja(4, 5);
-    this.cilindro = new Cilindro(64, 10);
+    this.caja = Primitivas.caja(4, 5);
+    this.cilindro = Primitivas.cilindro(64, 10);
     this.cilPos = 3;
 
     this.matCaja = this.createCajaMatrix();    

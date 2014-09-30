@@ -2,6 +2,14 @@ ShaderPrograms = {};
 ShaderPrograms.SimpleShader = {};
 
 ShaderPrograms.SimpleShader.CreateProgram = function () {
+    if (ShaderPrograms.SimpleShader.instance === undefined) {
+        ShaderPrograms.SimpleShader.instance
+            = ShaderPrograms.SimpleShader.getInstance();
+    }
+    return ShaderPrograms.SimpleShader.instance;
+};
+
+ShaderPrograms.SimpleShader.getInstance = function () {
   var vertexSrc = "                             \
         attribute vec3 aVertexPosition;         \
         attribute vec4 aVertexColor;            \
@@ -50,6 +58,10 @@ ShaderPrograms.SimpleShader.CreateProgram = function () {
                     gl.FLOAT, false, 0, 0);
       },
       initGL: function (gl) {
+          if (this._initialized === true) {
+              return;
+          }
+          this.id = Math.random();
           this.vertexShader = ShaderUtils.getShader(
                   gl, gl.VERTEX_SHADER, vertexSrc);
           this.fragmentShader = ShaderUtils.getShader(
@@ -70,6 +82,8 @@ ShaderPrograms.SimpleShader.CreateProgram = function () {
                   this.program.prg, "uPMatrix");
           this.program.uMVMatrix = gl.getUniformLocation(
                   this.program.prg, "uMVMatrix");
+
+          this._initialized = true;
       }
   };
 };

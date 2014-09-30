@@ -70,6 +70,9 @@ function Cilindro(cortes, franjas) {
 }
 
 Cilindro.prototype.initGL = function(gl) {
+    if (this._initialized === true) {
+        return;
+    }
     this.vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.cilindro), gl.STATIC_DRAW);
@@ -84,6 +87,7 @@ Cilindro.prototype.initGL = function(gl) {
                   gl.STATIC_DRAW);
 
     this.program.initGL(gl);
+    this._initialized = true;
 };
 
 Cilindro.prototype.draw = function(dc) {

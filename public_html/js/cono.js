@@ -90,6 +90,9 @@ Cono.prototype.getRadioMin = function() {
 };
 
 Cono.prototype.initGL = function(gl) {
+    if (this._initialized === true) {
+        return;
+    }
     this.vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.cono), gl.STATIC_DRAW);
@@ -104,6 +107,7 @@ Cono.prototype.initGL = function(gl) {
                   gl.STATIC_DRAW);
 
     this.program.initGL(gl);
+    this._initialized = true;
 };
 
 Cono.prototype.draw = function(dc) {

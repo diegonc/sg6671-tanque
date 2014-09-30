@@ -11,32 +11,34 @@ function Torreta() {
         new Canion(),
         new Canion()
     ];
+    this.desp = 0.8;
+    this.zdesp = -2.5;
     this.matrices = this.createMatrices();
 }
 
 Torreta.prototype.createMatrices = function() {
     var am = [];
     var m;
-    var desp = 0.8;
+    var desp = this.desp;
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [-desp, desp, 0]);
+    mat4.translate(m, [-desp, desp, this.zdesp]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [-desp, -desp, 0]);
+    mat4.translate(m, [-desp, -desp, this.zdesp]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [desp, desp, 0]);
+    mat4.translate(m, [desp, desp, this.zdesp]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [desp, -desp, 0]);
+    mat4.translate(m, [desp, -desp, this.zdesp]);
     am.push(m);
     
     return am;

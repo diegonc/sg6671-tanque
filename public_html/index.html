@@ -139,9 +139,29 @@
                     tick();
                 }
             }
+            function onKeyUp(e){	
+                var evtobj=window.event? event : e;
+                var unicode=evtobj.charCode? evtobj.charCode : evtobj.keyCode
+                var actualkey=String.fromCharCode(unicode)
+
+                if (actualkey==="D") {
+                        baseTorreta.guiniada += 0.01;
+                } else if (actualkey==="A"){
+                        baseTorreta.guiniada -= 0.01;
+                } else if (actualkey==="W"){
+                        baseTorreta.cabeceo += 0.01;
+                } else if (actualkey==="S"){
+                        baseTorreta.cabeceo -= 0.01;
+                } else if (actualkey==="F"){
+                        baseTorreta.guiniada = 0;
+                } else if (actualkey==="R"){
+                        baseTorreta.cabeceo = 0;
+                }
+            }
         </script>
     </head>
-    <body onload="start();">
+    <body onload="start();"
+          onkeyup="onKeyUp(event)">
         <canvas
             id="escena"
             width="800"

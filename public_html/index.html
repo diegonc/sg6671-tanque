@@ -19,6 +19,7 @@
         <script type="text/javascript" src="js/primitivas.js"></script>
         <script type="text/javascript" src="js/canion.js"></script>
         <script type="text/javascript" src="js/torreta.js"></script>
+        <script type="text/javascript" src="js/base-torreta.js"></script>
         
         <script type="text/javascript">
             
@@ -27,7 +28,9 @@
             var caja = new Caja(4, 5);
             var canion = new Canion();
             var torreta = new Torreta();
+            var baseTorreta = new BaseTorreta();
             var frame = 0;
+            var angY = 0*1.6;
             
             function drawScene() {
                 gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -39,8 +42,8 @@
                 
                 var camara = mat4.create();
                 mat4.identity(camara);
-                mat4.translate(camara, [0, 0, -18]);
-                mat4.rotateX(camara, Math.PI / 8);
+                mat4.translate(camara, [0, 0, -10]);
+                //mat4.rotateX(camara, Math.PI / 8);
                 /*
                 var rotX = mat4.create();
                 mat4.identity(rotX);
@@ -96,17 +99,24 @@
                 var rotZ = mat4.create();
                 mat4.identity(rotZ);
                 mat4.rotate(rotZ, frame*0.01, [1, 0, 0]);
+                
+                var rotY = mat4.create();
+                mat4.identity(rotY);
+                mat4.rotate(rotY, angY, [0, 1, 0]);
 
                 var mvMatrix = mat4.create();
                 mat4.identity(mvMatrix);
                 mat4.multiply(mvMatrix, camara);
+                mat4.multiply(mvMatrix, rotY);
                 mat4.multiply(mvMatrix, rotZ);
-                torreta.draw(new TorretaDrawContext(gl, pMatrix, mvMatrix));
+                //mat4.scale(mvMatrix, [0.5, 0.5, 0.5]);
+                //torreta.draw(new TorretaDrawContext(gl, pMatrix, mvMatrix));
+                baseTorreta.draw(new BaseTorretaDrawContext(gl, pMatrix, mvMatrix));
             }
             
             function tick() {
                 requestAnimFrame(tick);
-                frame += 1;
+                //frame += 1;
                 drawScene();
             }
             
@@ -124,6 +134,7 @@
                     caja.initGL(gl);
                     canion.initGL(gl);
                     torreta.initGL(gl);
+                    baseTorreta.initGL(gl);
                     
                     tick();
                 }

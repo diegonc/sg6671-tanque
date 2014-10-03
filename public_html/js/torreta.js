@@ -16,10 +16,13 @@ function Torreta() {
         Primitivas.caja(4,5),
         Primitivas.caja(4,5)
     ];
-            
-    this.despX = 0.45;
-    this.despY = 0.20;
-    this.zdesp = -2.5;
+    
+    this.canionTamX = 0.25;
+    this.canionTamY = 0.25;
+    this.canionTamZ = 1;
+    this.despX = 0.70;
+    this.despY = 0.2;
+    this.zdesp = -this.canionTamZ / 2;
     this.matricesCaniones = this.crearMatricesCaniones();
     this.matrizEje = this.crearMatrizEje();
     this.matricesLaterales = this.crearMatricesLaterales();
@@ -30,25 +33,36 @@ Torreta.prototype.crearMatricesCaniones = function() {
     var m;
     var despX = this.despX;
     var despY = this.despY;
+    var sx = this.canionTamX / 1;
+    var sy = this.canionTamY / 1;
+    var sz = this.canionTamZ / 4;    
 
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [-despX-1, despY, this.zdesp]);
+    mat4.translate(m, [-despX - this.canionTamX / 2,
+                        despY - this.canionTamY / 2, this.zdesp]);
+    mat4.scale(m, [sx, sy, sz]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [-despX-1, -despY-1, this.zdesp]);
+    mat4.translate(m, [-despX - this.canionTamX / 2,
+                       -despY - this.canionTamY / 2, this.zdesp]);
+    mat4.scale(m, [sx, sy, sz]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [despX, despY, this.zdesp]);
+    mat4.translate(m, [despX - this.canionTamX / 2,
+                       despY - this.canionTamY / 2, this.zdesp]);
+    mat4.scale(m, [sx, sy, sz]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [despX, -despY-1, this.zdesp]);
+    mat4.translate(m, [despX - this.canionTamX / 2,
+                       -despY - this.canionTamY / 2, this.zdesp]);
+    mat4.scale(m, [sx, sy, sz]);
     am.push(m);
 
     return am;
@@ -57,9 +71,9 @@ Torreta.prototype.crearMatricesCaniones = function() {
 Torreta.prototype.crearMatrizEje = function() {
     var m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [-this.despX-0.5, 0, 0]);  
+    mat4.translate(m, [-this.despX, 0, 0]);  
     mat4.rotateY(m, Math.PI / 2);
-    mat4.scale(m, [0.15, 0.15, 2*this.despX+1]);
+    mat4.scale(m, [0.10, 0.10, 2*this.despX]);
     return m;
 };
 
@@ -67,16 +81,16 @@ Torreta.prototype.crearMatricesLaterales = function() {
     var am = [];
     var m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [-this.despX-0.6, this.despY+0.5, -0.15]);
+    mat4.translate(m, [-this.despX - 0.1 / 2, this.despY, -0.15]);
     mat4.rotateX(m, Math.PI / 2);
-    mat4.scale(m, [0.1, 0.3, 2*this.despY+1]);
+    mat4.scale(m, [0.1, 0.3, 2*this.despY]);
     am.push(m);
     
     m = mat4.create();
     mat4.identity(m);
-    mat4.translate(m, [this.despX+0.5, this.despY+0.5, -0.15]);
+    mat4.translate(m, [this.despX - 0.1 / 2, this.despY, -0.15]);
     mat4.rotateX(m, Math.PI / 2);
-    mat4.scale(m, [0.1, 0.3, 2*this.despY+1]);
+    mat4.scale(m, [0.1, 0.3, 2*this.despY]);
     am.push(m);
 
     return am;

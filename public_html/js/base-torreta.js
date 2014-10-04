@@ -14,7 +14,6 @@ function BaseTorreta() {
     this.alturaTorreta = 1.3;
     this.posicionMontaje = 0.5;
     this.alturaMontaje = 1;
-    this.matrizMontaje = this.crearMatrizMontaje();
     this.matrizBase = this.crearMatrizBase();
     
     /* Parametros dinámicos */
@@ -40,6 +39,7 @@ BaseTorreta.prototype.crearMatrizMontaje = function() {
     var m = mat4.create();
     mat4.identity(m);
     mat4.translate(m, [0, this.posicionMontaje, 0]);
+    mat4.rotateY(m, this.guiniada);
     mat4.rotateX(m, -Math.PI / 2);
     mat4.scale(m, [radio, radio, this.alturaMontaje]);
     return m;
@@ -64,9 +64,10 @@ BaseTorreta.prototype.draw = function(dc) {
     baseDC.mM = m;
     this.base.draw(baseDC);
     
+    var matrizMontaje = this.crearMatrizMontaje();
     var montajeDC = new CilindroDrawContext(gl, dc.pM);
     m = mat4.create(dc.mM);
-    mat4.multiply(m, this.matrizMontaje);
+    mat4.multiply(m, matrizMontaje);
     montajeDC.mM = m;
     this.montaje.draw(montajeDC);
     

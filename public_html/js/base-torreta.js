@@ -49,8 +49,8 @@ BaseTorreta.prototype.crearMatrizTorreta = function() {
     var m = mat4.create();
     mat4.identity(m);
     mat4.translate(m, [0, this.alturaTorreta, 0]);
-    mat4.rotateX(m, this.cabeceo);
     mat4.rotateY(m, this.guiniada);
+    mat4.rotateX(m, this.cabeceo);
     return m;
 };
 

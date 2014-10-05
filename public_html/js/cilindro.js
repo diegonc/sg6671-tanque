@@ -15,6 +15,7 @@ function Cilindro(cortes, franjas) {
     var Z_MAX = 1;
 
     this.cilindro = [];
+    this.normales = [];
     this.indices = [];
 
     // El cilindro se define como una grilla de
@@ -27,6 +28,10 @@ function Cilindro(cortes, franjas) {
         this.cilindro.push(0.0);
         this.cilindro.push(0.0);
         this.cilindro.push(Z_MAX);
+        
+        this.normales.push(0);
+        this.normales.push(0);
+        this.normales.push(1);
     }
     // Las (FRANJAS + 1) filas intermedias corresponden
     // al cuerpo del cilindro.
@@ -35,9 +40,15 @@ function Cilindro(cortes, franjas) {
         var z = Z_MAX - i * PASO_Z;
         for (var j=0; j < CORTES; j++) {
             var a = j * PASO;
-            this.cilindro.push(RADIO * Math.cos(a));
-            this.cilindro.push(RADIO * Math.sin(a));
+            var cosa = Math.cos(a);
+            var sina = Math.sin(a);
+            this.cilindro.push(RADIO * cosa);
+            this.cilindro.push(RADIO * sina);
             this.cilindro.push(z);
+            
+            this.normales.push(cosa);
+            this.normales.push(sina);
+            this.normales.push(0);
         }
     }
     // La ultima fila de la grilla corresponde al
@@ -46,6 +57,10 @@ function Cilindro(cortes, franjas) {
         this.cilindro.push(0.0);
         this.cilindro.push(0.0);
         this.cilindro.push(0.0);
+        
+        this.normales.push(0);
+        this.normales.push(0);
+        this.normales.push(-1);
     }
 
     this.colors = [];

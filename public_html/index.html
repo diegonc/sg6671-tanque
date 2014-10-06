@@ -141,8 +141,8 @@
             }
             function onKeyUp(e){	
                 var evtobj=window.event? event : e;
-                var unicode=evtobj.charCode? evtobj.charCode : evtobj.keyCode
-                var actualkey=String.fromCharCode(unicode)
+                var unicode=evtobj.charCode? evtobj.charCode : evtobj.keyCode;
+                var actualkey=String.fromCharCode(unicode);
 
                 if (actualkey==="D") {
                         baseTorreta.guiniada += 0.1;

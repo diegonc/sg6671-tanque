@@ -16,7 +16,7 @@ function Cono(cortes, franjas, zmax) {
     var RADIO_MAX = 1;
     var Z_MAX = zmax || 1;
 
-    this.zmax = zmax;
+    this.zmax = Z_MAX;
 
     this.cono = [];
     this.normales = [];

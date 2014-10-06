@@ -19,6 +19,7 @@ function Cono(cortes, franjas, zmax) {
     this.zmax = zmax;
 
     this.cono = [];
+    this.normales = [];
     this.indices = [];
 
     // El cono se define como una grilla de
@@ -35,6 +36,10 @@ function Cono(cortes, franjas, zmax) {
         this.cono.push(0.0);
         this.cono.push(0.0);
         this.cono.push(z);
+        
+        this.normales.push(0);
+        this.normales.push(0);
+        this.normales.push(1);
     }
 
     // La siguientes FRANJAS filas de
@@ -50,6 +55,27 @@ function Cono(cortes, franjas, zmax) {
             this.cono.push(radio * Math.cos(a));
             this.cono.push(radio * Math.sin(a));
             this.cono.push(z);
+            
+            // El vector director de la generatriz del cono
+            // es (RADIO_MAX, -1) en el plano XZ y su vector
+            // normal es (nx, nz) tal que
+            // (RADIO_MAX, -1) · (nx, nz) = 0
+            // RADIO_MAX * nx - nz = 0 => nz = RADIO_MAX * nx
+            // Dando el valor 1 a nx resulta nz = RADIO_MAX
+            var norm = vec3.create([1, 0, RADIO_MAX]);
+            
+            // Luego se rota el vector normal por el ángulo a
+            var rotZ = mat4.create();
+            mat4.identity(rotZ);
+            mat4.rotateZ(rotZ, a);
+            mat4.multiplyVec3(rotZ, norm);
+            
+            // Finalmente se normaliza
+            vec3.normalize(norm);
+            
+            this.normales.push(norm[0]);
+            this.normales.push(norm[1]);
+            this.normales.push(norm[2]);
         }
     
         z -= PASO_Z;
@@ -62,6 +88,10 @@ function Cono(cortes, franjas, zmax) {
         this.cono.push(0.0);
         this.cono.push(0.0);
         this.cono.push(0.0);
+        
+        this.normales.push(0);
+        this.normales.push(0);
+        this.normales.push(-1);
     }
 
     this.colors = [];

@@ -12,6 +12,7 @@
         <script type="text/javascript" src="js/tstrip-utils.js"></script>
         <script type="text/javascript" src="js/shader-utils.js"></script>
         <script type="text/javascript" src="js/shader-programs.js"></script>
+        <script type="text/javascript" src="js/poligono.js"></script>
 
         <script type="text/javascript" src="js/cono.js"></script>
         <script type="text/javascript" src="js/cilindro.js"></script>
@@ -20,6 +21,7 @@
         <script type="text/javascript" src="js/canion.js"></script>
         <script type="text/javascript" src="js/torreta.js"></script>
         <script type="text/javascript" src="js/base-torreta.js"></script>
+        <script type="text/javascript" src="js/carroceria.js"></script>
         
         <script type="text/javascript">
             
@@ -29,8 +31,11 @@
             var canion = new Canion();
             var torreta = new Torreta();
             var baseTorreta = new BaseTorreta();
+            var carroceria = new Carroceria([0.525, 0.318, 0.741, 1.0]);
+            
             var frame = 0;
             var angY = 0*1.6;
+            var zoom = 70;
             
             function drawScene() {
                 gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -42,7 +47,7 @@
                 
                 var camara = mat4.create();
                 mat4.identity(camara);
-                mat4.translate(camara, [0, 0, -10]);
+                mat4.translate(camara, [0, 0, -zoom]);
                 //mat4.rotateX(camara, Math.PI / 8);
                 /*
                 var rotX = mat4.create();
@@ -112,6 +117,7 @@
                 //mat4.scale(mvMatrix, [0.5, 0.5, 0.5]);
                 //torreta.draw(new TorretaDrawContext(gl, pMatrix, mvMatrix));
                 baseTorreta.draw(new BaseTorretaDrawContext(gl, pMatrix, mvMatrix));
+                carroceria.draw(new CarroceriaDrawContext(gl, pMatrix, mvMatrix));
             }
             
             function tick() {
@@ -135,11 +141,12 @@
                     canion.initGL(gl);
                     torreta.initGL(gl);
                     baseTorreta.initGL(gl);
+                    carroceria.initGL(gl);
                     
                     tick();
                 }
             }
-            function onKeyUp(e){	
+            function onKeyUp(e){
                 var evtobj=window.event? event : e;
                 var unicode=evtobj.charCode? evtobj.charCode : evtobj.keyCode;
                 var actualkey=String.fromCharCode(unicode);

@@ -26,15 +26,6 @@
         <script type="text/javascript" src="js/tanque.js"></script>
         
         <script type="text/javascript">
-            
-            var cono = new Cono(64, 10, 0.5, [1.0, 0, 0, 1.0]);
-            var cilindro = new Cilindro(64, 10, [1.0, 0, 0, 1.0]);
-            var caja = new Caja(4, 5, [1.0, 0, 0, 1.0]);
-            var canion = new Canion([1.0, 0, 0, 1.0]);
-            var torreta = new Torreta([1.0, 0, 0, 1.0]);
-            var baseTorreta = new BaseTorreta();
-            var carroceria = new Carroceria([0.525, 0.318, 0.741, 1.0]);
-            var rueda = new Rueda([0.616, 0.451, 0.263, 1.0]);
             var tanque = new Tanque();
             
             var frame = 0;
@@ -52,58 +43,6 @@
                 var camara = mat4.create();
                 mat4.identity(camara);
                 mat4.translate(camara, [0, 0, -zoom]);
-                //mat4.rotateX(camara, Math.PI / 8);
-                /*
-                var rotX = mat4.create();
-                mat4.identity(rotX);
-                mat4.rotate(rotX, -Math.PI / 2, [1, 0, 0]);
-                var rotZ = mat4.create();
-                mat4.identity(rotZ);
-                mat4.rotate(rotZ, frame*0.01, [0, 0, 1]);
-                
-                var mvMatrix = mat4.create();
-                mat4.identity(mvMatrix);
-                mat4.multiply(mvMatrix, camara);
-                mat4.multiply(mvMatrix, rotX);
-                mat4.multiply(mvMatrix, rotZ);
-                
-                cono.draw(new ConoDrawContext(gl, pMatrix, mvMatrix));
-                
-                var escalaCaja = mat4.create();
-                mat4.identity(escalaCaja);
-                mat4.scale(escalaCaja, [0.2, 0.2, 1]);
-                var transCaja = mat4.create();
-                mat4.identity(transCaja);
-                mat4.translate(transCaja, [cono.getRadioMin(), cono.zmax + 0.8, cono.getRadioMin()]);
-                var rotY = mat4.create();
-                mat4.identity(rotY);
-                mat4.rotate(rotY, -Math.PI / 2, [0, 1, 0]);
-                
-                mat4.identity(mvMatrix);
-                mat4.multiply(mvMatrix, camara);
-                //mat4.multiply(mvMatrix, rotX);
-                mat4.multiply(mvMatrix, transCaja);
-                mat4.multiply(mvMatrix, rotY);
-                mat4.multiply(mvMatrix, escalaCaja);
-                
-                caja.draw(new CajaDrawContext(gl, pMatrix, mvMatrix));
-
-                var radioMin = cono.getRadioMin();
-                var escala = mat4.create();
-                mat4.identity(escala);
-                mat4.scale(escala, [radioMin, radioMin, 1]);
-                var posY = mat4.create();
-                mat4.identity(posY);
-                mat4.translate(posY,[0, cono.zmax, 0]);
-                
-                mat4.identity(mvMatrix);
-                mat4.multiply(mvMatrix, camara);
-                mat4.multiply(mvMatrix, posY);
-                mat4.multiply(mvMatrix, rotX);
-                mat4.multiply(mvMatrix, rotZ);
-                mat4.multiply(mvMatrix, escala);
-                cilindro.draw(new CilindroDrawContext(gl, pMatrix, mvMatrix));
-                        */
 
                 var rotZ = mat4.create();
                 mat4.identity(rotZ);
@@ -118,11 +57,7 @@
                 mat4.multiply(mvMatrix, camara);
                 mat4.multiply(mvMatrix, rotZ);
                 mat4.multiply(mvMatrix, rotY);
-                //mat4.scale(mvMatrix, [2, 2, 1]);
-                //torreta.draw(new TorretaDrawContext(gl, pMatrix, mvMatrix));
-                //baseTorreta.draw(new BaseTorretaDrawContext(gl, pMatrix, mvMatrix));
-                //carroceria.draw(new CarroceriaDrawContext(gl, pMatrix, mvMatrix));
-                //rueda.draw(new RuedaDrawContext(gl, pMatrix, mvMatrix));
+
                 tanque.draw(new TanqueDrawContext(gl, pMatrix, mvMatrix));
             }
 
@@ -144,15 +79,7 @@
                     gl.viewportWidth = canvas.width;
                     gl.clearColor(0.0, 0.0, 0.0, 1.0);
                     gl.enable(gl.DEPTH_TEST);
-                    
-                    cono.initGL(gl);
-                    cilindro.initGL(gl);
-                    caja.initGL(gl);
-                    canion.initGL(gl);
-                    torreta.initGL(gl);
-                    baseTorreta.initGL(gl);
-                    carroceria.initGL(gl);
-                    rueda.initGL(gl);
+
                     tanque.initGL(gl);
                     
                     tick();

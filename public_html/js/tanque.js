@@ -35,6 +35,8 @@ function Tanque() {
     this.rotacionRTD = 0;
     this.rotacionRDI = 0;
     this.rotacionRDD = 0;
+    this.direccionRDI = 0;
+    this.direccionRDD = 0;
 }
 
 Tanque.prototype.initGL = function(gl) {
@@ -71,6 +73,7 @@ Tanque.prototype.calcularMatrizRDI = function() {
     mat4.identity(m);
     var tx = this.carroceria.ancho / 2 +  this.separacionRuedas;
     mat4.translate(m, [tx, -0.58, 1.23]);
+    mat4.rotateY(m, this.direccionRDI);
     mat4.rotateY(m, Math.PI/2);
     mat4.rotateZ(m, this.rotacionRDI);
     return m;
@@ -81,6 +84,7 @@ Tanque.prototype.calcularMatrizRDD = function() {
     mat4.identity(m);
     var tx = -this.carroceria.ancho / 2 -  this.separacionRuedas;
     mat4.translate(m, [tx, -0.58, 1.23]);
+    mat4.rotateY(m, this.direccionRDD);
     mat4.rotateY(m, Math.PI/2);
     mat4.rotateZ(m, this.rotacionRDD);
     return m;

@@ -27,11 +27,11 @@
         
         <script type="text/javascript">
             
-            var cono = new Cono(64, 10, 0.5);
-            var cilindro = new Cilindro(64, 10);
-            var caja = new Caja(4, 5);
-            var canion = new Canion();
-            var torreta = new Torreta();
+            var cono = new Cono(64, 10, 0.5, [1.0, 0, 0, 1.0]);
+            var cilindro = new Cilindro(64, 10, [1.0, 0, 0, 1.0]);
+            var caja = new Caja(4, 5, [1.0, 0, 0, 1.0]);
+            var canion = new Canion([1.0, 0, 0, 1.0]);
+            var torreta = new Torreta([1.0, 0, 0, 1.0]);
             var baseTorreta = new BaseTorreta();
             var carroceria = new Carroceria([0.525, 0.318, 0.741, 1.0]);
             var rueda = new Rueda([0.616, 0.451, 0.263, 1.0]);

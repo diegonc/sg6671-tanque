@@ -7,7 +7,7 @@ function CilindroDrawContext(gl, pM, mM) {
     this.mM = mM;
 }
 
-function Cilindro(cortes, franjas) {
+function Cilindro(cortes, franjas, color) {
     var CORTES = cortes;
     var FRANJAS = franjas;
     var PASO = (Math.PI * 2) / (CORTES - 1);
@@ -67,17 +67,10 @@ function Cilindro(cortes, franjas) {
     // Colores de los vertices del cilindro
     for (var i = 0; i < (FRANJAS + 3); i++) {
       for (var j = 0; j < CORTES; j++) {
-        if (j % 2 === 0) {
-            this.colors.push(0.7);
-            this.colors.push(0.7);
-            this.colors.push(0.7);
-            this.colors.push(1.0);
-        } else {
-            this.colors.push(0.65);
-            this.colors.push(0.65);
-            this.colors.push(0.65);
-            this.colors.push(1.0);
-        }
+        this.colors.push(color[0]);
+        this.colors.push(color[1]);
+        this.colors.push(color[2]);
+        this.colors.push(color[3]);
       }
     }
 

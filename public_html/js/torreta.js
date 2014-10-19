@@ -4,17 +4,17 @@ function TorretaDrawContext(gl, pM, mvM) {
     this.mvM = mvM;
 }
 
-function Torreta() {
+function Torreta(color) {
     this.caniones = [
-        new Canion(),
-        new Canion(),
-        new Canion(),
-        new Canion()
+        new Canion(color),
+        new Canion(color),
+        new Canion(color),
+        new Canion(color)
     ];
-    this.eje = Primitivas.cilindro(64, 10);
+    this.eje = Primitivas.cilindro(64, 10, color);
     this.laterales = [
-        Primitivas.caja(4,5),
-        Primitivas.caja(4,5)
+        Primitivas.caja(4, 5, color),
+        Primitivas.caja(4, 5, color)
     ];
     
     this.canionTamX = 0.25;

@@ -7,7 +7,7 @@ function ConoDrawContext(gl, pM, mM) {
     this.mM = mM;
 }
 
-function Cono(cortes, franjas, zmax) {
+function Cono(cortes, franjas, zmax, color) {
     console.assert(zmax === undefined || zmax <= 1.0, "zmax > 1");
 
     var CORTES = cortes;
@@ -98,17 +98,10 @@ function Cono(cortes, franjas, zmax) {
     // Colores de los vertices del cono
     for (var i = 0; i < (FRANJAS + 2); i++) {
       for (var j = 0; j < CORTES; j++) {
-        if (i % 2 === 0) {
-            this.colors.push(0.7);
-            this.colors.push(0.7);
-            this.colors.push(0.7);
-            this.colors.push(1.0);
-        } else {
-            this.colors.push(0.65);
-            this.colors.push(0.65);
-            this.colors.push(0.65);
-            this.colors.push(1.0);
-        }
+        this.colors.push(color[0]);
+        this.colors.push(color[1]);
+        this.colors.push(color[2]);
+        this.colors.push(color[3]);
       }
     }
     this.program = ShaderPrograms.SimpleShader.CreateProgram();

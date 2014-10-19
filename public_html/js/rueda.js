@@ -5,9 +5,9 @@ function RuedaDrawContext(gl, pM, mM) {
 }
 
 function Rueda(color) {
-    this.ladoIzq = Primitivas.cono(64, 10, 0.2);
-    this.centro = Primitivas.cilindro(64, 10);
-    this.ladoDer = Primitivas.cono(64, 10, 0.2);
+    this.ladoIzq = Primitivas.cono(64, 10, 0.2, color);
+    this.centro = Primitivas.cilindro(64, 10, color);
+    this.ladoDer = Primitivas.cono(64, 10, 0.2, color);
     
     function crearMatIzq() {
         var m = mat4.create();

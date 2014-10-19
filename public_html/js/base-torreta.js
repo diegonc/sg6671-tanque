@@ -6,9 +6,9 @@ function BaseTorretaDrawContext(gl, pM, mM) {
 
 function BaseTorreta() {
     /* Partes del objeto */
-    this.torreta = new Torreta();
-    this.montaje = Primitivas.cilindro(64, 10);
-    this.base = Primitivas.cono(64, 10, 0.5);
+    this.torreta = new Torreta([0.161, 0.498, 0.549, 1.0]);
+    this.montaje = Primitivas.cilindro(64, 10, [0.573, 0.188, 0.514, 1.0]);
+    this.base = Primitivas.cono(64, 10, 0.5, [0.573, 0.188, 0.514, 1.0]);
     
     /* Parametros constructivos */
     this.alturaTorreta = 1.3;

@@ -7,7 +7,7 @@ function CajaDrawContext(gl, pM, mM) {
     this.mM = mM;
 }
 
-function Caja(cortesPorCara, franjas) {
+function Caja(cortesPorCara, franjas, color) {
     var Z_MAX = 1;
     var PASO = 1 / (cortesPorCara - 1);
 
@@ -95,17 +95,10 @@ function Caja(cortesPorCara, franjas) {
     // Colores de los vertices del cilindro
     for (var i = 0; i < (franjas + 3); i++) {
       for (var j = 0; j < verticesPorCol; j++) {
-        if (j % 2 === 0) {
-            this.colors.push(0.7);
-            this.colors.push(0.7);
-            this.colors.push(0.7);
-            this.colors.push(1.0);
-        } else {
-            this.colors.push(0.65);
-            this.colors.push(0.65);
-            this.colors.push(0.65);
-            this.colors.push(1.0);
-        }
+        this.colors.push(color[0]);
+        this.colors.push(color[1]);
+        this.colors.push(color[2]);
+        this.colors.push(color[3]);
       }
     }
 

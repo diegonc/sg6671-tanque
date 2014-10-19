@@ -50,7 +50,7 @@ Tanque.prototype.calcularMatrizRTI = function() {
     var m = mat4.create();
     mat4.identity(m);
     var tx = this.carroceria.ancho / 2 + this.separacionRuedas;
-    mat4.translate(m, [tx, -0.48, -4.54]);
+    mat4.translate(m, [tx, -0.58, -4.54]);
     mat4.rotateY(m, Math.PI/2);
     return m;
 };
@@ -59,7 +59,7 @@ Tanque.prototype.calcularMatrizRTD = function() {
     var m = mat4.create();
     mat4.identity(m);
     var tx = -this.carroceria.ancho / 2 -  this.separacionRuedas;
-    mat4.translate(m, [tx, -0.48, -4.54]);
+    mat4.translate(m, [tx, -0.58, -4.54]);
     mat4.rotateY(m, Math.PI/2);
     return m;
 };
@@ -68,7 +68,7 @@ Tanque.prototype.calcularMatrizRDI = function() {
     var m = mat4.create();
     mat4.identity(m);
     var tx = this.carroceria.ancho / 2 +  this.separacionRuedas;
-    mat4.translate(m, [tx, -0.48, 1.23]);
+    mat4.translate(m, [tx, -0.58, 1.23]);
     mat4.rotateY(m, Math.PI/2);
     return m;
 };
@@ -77,7 +77,7 @@ Tanque.prototype.calcularMatrizRDD = function() {
     var m = mat4.create();
     mat4.identity(m);
     var tx = -this.carroceria.ancho / 2 -  this.separacionRuedas;
-    mat4.translate(m, [tx, -0.48, 1.23]);
+    mat4.translate(m, [tx, -0.58, 1.23]);
     mat4.rotateY(m, Math.PI/2);
     return m;
 };

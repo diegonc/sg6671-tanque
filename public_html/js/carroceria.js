@@ -100,9 +100,9 @@ function Carroceria(color) {
     var numVert = this.vertices.length / 3;
     this.colors = [];
     for (var i=0; i < numVert; i++) {
-        var factorR = Math.random() * (1.0 - 0.8) + 0.8;
-        var factorG = Math.random() * (1.0 - 0.8) + 0.8;
-        var factorB = Math.random() * (1.0 - 0.8) + 0.8;
+        var factorR = 1 /*Math.random() * (1.0 - 0.8) + 0.8*/;
+        var factorG = 1 /*Math.random() * (1.0 - 0.8) + 0.8*/;
+        var factorB = 1 /*Math.random() * (1.0 - 0.8) + 0.8*/;
         this.colors.push(color[0] * factorR);
         this.colors.push(color[1] * factorG);
         this.colors.push(color[2] * factorB);

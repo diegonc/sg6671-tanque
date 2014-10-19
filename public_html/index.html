@@ -22,6 +22,7 @@
         <script type="text/javascript" src="js/torreta.js"></script>
         <script type="text/javascript" src="js/base-torreta.js"></script>
         <script type="text/javascript" src="js/carroceria.js"></script>
+        <script type="text/javascript" src="js/rueda.js"></script>
         
         <script type="text/javascript">
             
@@ -32,6 +33,7 @@
             var torreta = new Torreta();
             var baseTorreta = new BaseTorreta();
             var carroceria = new Carroceria([0.525, 0.318, 0.741, 1.0]);
+            var rueda = new Rueda([0.616, 0.451, 0.263, 1.0]);
             
             var frame = 0;
             var angY = 0*1.6;
@@ -114,10 +116,11 @@
                 mat4.multiply(mvMatrix, camara);
                 mat4.multiply(mvMatrix, rotY);
                 mat4.multiply(mvMatrix, rotZ);
-                //mat4.scale(mvMatrix, [0.5, 0.5, 0.5]);
+                mat4.scale(mvMatrix, [2, 2, 1]);
                 //torreta.draw(new TorretaDrawContext(gl, pMatrix, mvMatrix));
-                baseTorreta.draw(new BaseTorretaDrawContext(gl, pMatrix, mvMatrix));
-                carroceria.draw(new CarroceriaDrawContext(gl, pMatrix, mvMatrix));
+                //baseTorreta.draw(new BaseTorretaDrawContext(gl, pMatrix, mvMatrix));
+                //carroceria.draw(new CarroceriaDrawContext(gl, pMatrix, mvMatrix));
+                rueda.draw(new RuedaDrawContext(gl, pMatrix, mvMatrix));
             }
             
             function tick() {
@@ -142,6 +145,7 @@
                     torreta.initGL(gl);
                     baseTorreta.initGL(gl);
                     carroceria.initGL(gl);
+                    rueda.initGL(gl);
                     
                     tick();
                 }

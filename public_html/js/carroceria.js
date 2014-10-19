@@ -17,6 +17,8 @@ function Carroceria(color) {
 //       ||               ||
 //       |-2,83       2,83 |
 //  -3,06                   3,06
+    this.ancho = 8;
+    this.alto = 6;
     this.poligono = new Poligono(
     // Puntos
     [

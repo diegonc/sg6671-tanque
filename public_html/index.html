@@ -130,6 +130,10 @@
                 requestAnimFrame(tick);
                 //frame += 1;
                 drawScene();
+                tanque.rotacionRTI += 0.1;
+                tanque.rotacionRTD += 0.1;
+                tanque.rotacionRDI += 0.1;
+                tanque.rotacionRDD += 0.1;
             }
             
             function start() {

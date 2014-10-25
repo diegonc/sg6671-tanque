@@ -9,6 +9,9 @@
         <script type="text/javascript" src="js/hashCode.js"></script>
         <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
         <script type="text/javascript" src="js/webgl-utils.js"></script>
+        <script type="text/javascript" src="js/cannon.js"></script>
+        <script type="text/javascript" src="js/simulador-fisico.js"></script>
+        
         <script type="text/javascript" src="js/tstrip-utils.js"></script>
         <script type="text/javascript" src="js/shader-utils.js"></script>
         <script type="text/javascript" src="js/shader-programs.js"></script>
@@ -24,9 +27,11 @@
         <script type="text/javascript" src="js/carroceria.js"></script>
         <script type="text/javascript" src="js/rueda.js"></script>
         <script type="text/javascript" src="js/tanque.js"></script>
+        <script type="text/javascript" src="js/mundo.js"></script>
         
         <script type="text/javascript">
-            var tanque = new Tanque();
+            var mundo = new Mundo();
+            var simulador = new Simulador();
             
             var frame = 0;
             var angY = 0*1.6;
@@ -58,17 +63,40 @@
                 mat4.multiply(mvMatrix, rotZ);
                 mat4.multiply(mvMatrix, rotY);
 
-                tanque.draw(new TanqueDrawContext(gl, pMatrix, mvMatrix));
+                mundo.draw(new MundoDrawContext(gl, pMatrix, mvMatrix));
+            }
+            
+            function updateWorld() {
+                var posCannon, rotCannon;
+                var pos, rot;
+                // Posicion del chasis
+                posCannon = simulador.tanque.chassisRb.position;
+                pos = mundo.tanque.position;
+                pos[0] = posCannon.x;
+                pos[1] = posCannon.y;
+                pos[2] = posCannon.z;
+                // Rotacion del chasis
+                rotCannon=simulador.tanque.getOrientacionChassis();
+                rot = mundo.tanque.rotation;
+                rot[0] = rotCannon.x;
+                rot[1] = rotCannon.y;
+                rot[2] = rotCannon.z;
+                
+                // Ruedas
+                var ruedaIzqDelRotation=simulador.tanque.getOrientacionRuedaIzqDel();
+		mundo.tanque.obj.setRuedaIDRotation(ruedaIzqDelRotation);
+                
+                var ruedaDerDelRotation=simulador.tanque.getOrientacionRuedaDerDel();          
+		mundo.tanque.obj.setRuedaDDRotation(ruedaDerDelRotation);
             }
 
             function tick() {
                 requestAnimFrame(tick);
                 //frame += 1;
+                
+                simulador.update();
+                updateWorld();                
                 drawScene();
-                tanque.rotacionRTI += 0.1;
-                tanque.rotacionRTD += 0.1;
-                tanque.rotacionRDI += 0.1;
-                tanque.rotacionRDD += 0.1;
             }
             
             function start() {
@@ -80,7 +108,7 @@
                     gl.clearColor(0.0, 0.0, 0.0, 1.0);
                     gl.enable(gl.DEPTH_TEST);
 
-                    tanque.initGL(gl);
+                    mundo.initGL(gl);
                     
                     tick();
                 }
@@ -91,18 +119,26 @@
                 var actualkey=String.fromCharCode(unicode);
 
                 if (actualkey==="J") {
-                        tanque.baseTorreta.guiniada += 0.1;
+                        mundo.tanque.obj.baseTorreta.guiniada += 0.1;
                 } else if (actualkey==="G"){
-                        tanque.baseTorreta.guiniada -= 0.1;
+                        mundo.tanque.obj.baseTorreta.guiniada -= 0.1;
                 } else if (actualkey==="Y"){
-                        tanque.baseTorreta.cabeceo += 0.1;
+                        mundo.tanque.obj.baseTorreta.cabeceo += 0.1;
                 } else if (actualkey==="H"){
-                        tanque.baseTorreta.cabeceo -= 0.1;
+                        mundo.tanque.obj.baseTorreta.cabeceo -= 0.1;
                 } else if (actualkey==="K"){
-                        tanque.baseTorreta.guiniada = 0;
+                        mundo.tanque.obj.baseTorreta.guiniada = 0;
                 } else if (actualkey==="I"){
-                        tanque.baseTorreta.cabeceo = 0;
-                }
+                        mundo.tanque.obj.baseTorreta.cabeceo = 0;
+                } else if (actualkey==="D") {
+                    simulador.tanque.incrementarAnguloVolante(5);
+		} else if (actualkey==="A"){
+                    simulador.tanque.incrementarAnguloVolante(-5);
+		} else if (actualkey==="W"){
+                    simulador.tanque.incrementarVelocidad(2);
+		} else if (actualkey==="S"){
+                    simulador.tanque.incrementarVelocidad(-2);
+		}
             }
         </script>
     </head>

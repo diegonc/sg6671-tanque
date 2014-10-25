@@ -38,6 +38,8 @@ function Tanque() {
     this.rotacionRDD = 0;
     this.direccionRDI = 0;
     this.direccionRDD = 0;
+    this.eulerRotDI = [0, 0, 0];
+    this.eulerRotDD = [0, 0, 0];
 }
 
 Tanque.prototype.initGL = function(gl) {
@@ -89,6 +91,18 @@ Tanque.prototype.calcularMatrizRDD = function() {
     mat4.rotateY(m, Math.PI/2);
     mat4.rotateZ(m, this.rotacionRDD);
     return m;
+};
+
+Tanque.prototype.setRuedaIDRotation = function(cannonVec) {
+    this.rotacionRDI = cannonVec.y;
+    this.direccionRDI = cannonVec.z;
+    this.eulerRotDI = [cannonVec.x, cannonVec.y, cannonVec.z];
+};
+
+Tanque.prototype.setRuedaDDRotation = function(cannonVec) {
+    this.rotacionRDD = cannonVec.y;
+    this.direccionRDD = cannonVec.z;
+    this.eulerRotDD = [cannonVec.x, cannonVec.y, cannonVec.z];
 };
 
 Tanque.prototype.draw = function(dc) {

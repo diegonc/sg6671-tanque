@@ -58,17 +58,17 @@ BaseTorreta.prototype.draw = function(dc) {
     var gl = dc.gl;
     var m;
 
-    var baseDC = new ConoDrawContext(gl, dc.pM);
+    var baseDC = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM);
     m = mat4.create(dc.mM);
     mat4.multiply(m, this.matrizBase);
-    baseDC.mM = m;
+    baseDC.mvMatrix = m;
     this.base.draw(baseDC);
     
     var matrizMontaje = this.crearMatrizMontaje();
-    var montajeDC = new CilindroDrawContext(gl, dc.pM);
+    var montajeDC = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM);
     m = mat4.create(dc.mM);
     mat4.multiply(m, matrizMontaje);
-    montajeDC.mM = m;
+    montajeDC.mvMatrix = m;
     this.montaje.draw(montajeDC);
     
     var matrizTorreta = this.crearMatrizTorreta();

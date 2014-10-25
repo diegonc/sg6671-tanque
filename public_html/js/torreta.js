@@ -119,14 +119,14 @@ Torreta.prototype.draw = function (dc) {
 
     m = mat4.create(dc.mvM);
     mat4.multiply(m, this.matrizEje);
-    ctx = new CilindroDrawContext(gl, dc.pM, m);
+    ctx = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM, m);
     this.eje.draw(ctx);
     
-    ctx = new CajaDrawContext(gl, dc.pM);
+    ctx = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM);
     for (var i=0; i < this.laterales.length; i++) {
         m = mat4.create(dc.mvM);    
         mat4.multiply(m, this.matricesLaterales[i]);
-        ctx.mM = m;
+        ctx.mvMatrix = m;
         this.laterales[i].draw(ctx);
     }
 };

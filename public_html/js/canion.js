@@ -39,12 +39,13 @@ Canion.prototype.draw = function(dc) {
     
     mat4.set(dc.mvM, mvM);
     mat4.multiply(mvM, this.matCaja);
-    this.caja.draw(new CajaDrawContext(gl, dc.pM, mvM));
+    var cajaDc = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM, mvM);
+    this.caja.draw(cajaDc);
     
     mat4.set(dc.mvM, mvM);
     this.matCilindro = this.createCilMatrix();
     mat4.multiply(mvM, this.matCilindro);
-    this.cilindro.draw(new CilindroDrawContext(gl, dc.pM, mvM));
+    this.cilindro.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM, mvM));
 };
 
 Canion.prototype.update = function(frameNum) {

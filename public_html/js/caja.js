@@ -1,13 +1,4 @@
-function CajaDrawContext(gl, pM, mM) {
-    // GL Context
-    this.gl = gl;
-    // Projection matrix
-    this.pM = pM;
-    // Model/View matrix
-    this.mM = mM;
-}
-
-function Caja(cortesPorCara, franjas, color) {
+function Caja(cortesPorCara, franjas, color, shader) {
     var Z_MAX = 1;
     var PASO = 1 / (cortesPorCara - 1);
 
@@ -102,7 +93,11 @@ function Caja(cortesPorCara, franjas, color) {
       }
     }
 
-    this.program = ShaderPrograms.SimpleShader.CreateProgram();
+    if (shader === undefined) {
+        this.program = ShaderPrograms.SimpleShader.CreateProgram();
+    } else {
+        this.program = shader;
+    }
 }
 
 Caja.prototype.initGL = function(gl) {
@@ -131,12 +126,5 @@ Caja.prototype.initGL = function(gl) {
 };
 
 Caja.prototype.draw = function(dc) {
-    var gl = dc.gl;
-
-    this.program.prepare(gl,
-        dc.pM, dc.mM,
-        this.vertexBuffer, this.colorBuffer);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-    gl.drawElements(gl.TRIANGLE_STRIP, this.indices.length, gl.UNSIGNED_SHORT, 0);
+    dc.draw(this);
 };

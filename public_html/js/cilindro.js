@@ -1,13 +1,4 @@
-function CilindroDrawContext(gl, pM, mM) {
-    // GL Context
-    this.gl = gl;
-    // Projection matrix
-    this.pM = pM;
-    // Model/View matrix
-    this.mM = mM;
-}
-
-function Cilindro(cortes, franjas, color) {
+function Cilindro(cortes, franjas, color, shader) {
     var CORTES = cortes;
     var FRANJAS = franjas;
     var PASO = (Math.PI * 2) / (CORTES - 1);
@@ -73,8 +64,12 @@ function Cilindro(cortes, franjas, color) {
         this.colors.push(color[3]);
       }
     }
-
-    this.program = ShaderPrograms.SimpleShader.CreateProgram();
+    
+    if (shader === undefined) {
+        this.program = ShaderPrograms.SimpleShader.CreateProgram();
+    } else {
+        this.program = shader;
+    }
 }
 
 Cilindro.prototype.initGL = function(gl) {
@@ -99,12 +94,5 @@ Cilindro.prototype.initGL = function(gl) {
 };
 
 Cilindro.prototype.draw = function(dc) {
-    var gl = dc.gl;
-    
-    this.program.prepare(gl,
-        dc.pM, dc.mM,
-        this.vertexBuffer, this.colorBuffer);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-    gl.drawElements(gl.TRIANGLE_STRIP, this.indices.length, gl.UNSIGNED_SHORT, 0);
+    dc.draw(this);
 };

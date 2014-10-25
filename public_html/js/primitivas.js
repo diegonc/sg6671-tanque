@@ -1,8 +1,12 @@
 Primitivas = {};
 Primitivas.registro = {};
 
-Primitivas.cono = function(cortes, franjas, zmax, color) {
-    var args = [Cono, cortes, franjas, zmax, color];
+Primitivas.cono = function(cortes, franjas, zmax, color, shader) {
+    var shaderName;
+    if (shader !== undefined) {
+        shaderName = shader.name;
+    }
+    var args = [Cono, cortes, franjas, zmax, color, shaderName];
     var hash = HashCode.value(args);
     var instance = this.registro[hash];
     if (instance === undefined) {
@@ -12,8 +16,12 @@ Primitivas.cono = function(cortes, franjas, zmax, color) {
     return instance;
 };
 
-Primitivas.cilindro = function(cortes, franjas, color) {
-    var args = [Cilindro, cortes, franjas, color];
+Primitivas.cilindro = function(cortes, franjas, color, shader) {
+    var shaderName;
+    if (shader !== undefined) {
+        shaderName = shader.name;
+    }
+    var args = [Cilindro, cortes, franjas, color, shaderName];
     var hash = HashCode.value(args);
     var instance = this.registro[hash];
     if (instance === undefined) {
@@ -23,8 +31,12 @@ Primitivas.cilindro = function(cortes, franjas, color) {
     return instance;
 };
 
-Primitivas.caja = function(cortes, franjas, color) {
-    var args = [Caja, cortes, franjas, color];
+Primitivas.caja = function(cortes, franjas, color, shader) {
+    var shaderName;
+    if (shader !== undefined) {
+        shaderName = shader.name;
+    }
+    var args = [Caja, cortes, franjas, color, shaderName];
     var hash = HashCode.value(args);
     var instance = this.registro[hash];
     if (instance === undefined) {

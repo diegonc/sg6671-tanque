@@ -50,13 +50,13 @@ Rueda.prototype.draw = function(dc) {
     
     mat4.set(dc.mM, mvM);
     mat4.multiply(mvM, this.matIzq);
-    this.ladoIzq.draw(new ConoDrawContext(gl, pM, mvM));
+    this.ladoIzq.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, pM, mvM));
     
     mat4.set(dc.mM, mvM);
     mat4.multiply(mvM, this.matCen);
-    this.centro.draw(new CilindroDrawContext(gl, pM, mvM));
+    this.centro.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, pM, mvM));
     
     mat4.set(dc.mM, mvM);
     mat4.multiply(mvM, this.matDer);
-    this.ladoDer.draw(new ConoDrawContext(gl, pM, mvM));
+    this.ladoDer.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, pM, mvM));
 };

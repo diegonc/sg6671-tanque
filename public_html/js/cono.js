@@ -1,13 +1,4 @@
-function ConoDrawContext(gl, pM, mM) {
-    // GL Context
-    this.gl = gl;
-    // Projection matrix
-    this.pM = pM;
-    // Model/View matrix
-    this.mM = mM;
-}
-
-function Cono(cortes, franjas, zmax, color) {
+function Cono(cortes, franjas, zmax, color, shader) {
     console.assert(zmax === undefined || zmax <= 1.0, "zmax > 1");
 
     var CORTES = cortes;
@@ -104,7 +95,12 @@ function Cono(cortes, franjas, zmax, color) {
         this.colors.push(color[3]);
       }
     }
-    this.program = ShaderPrograms.SimpleShader.CreateProgram();
+
+    if (shader === undefined) {
+        this.program = ShaderPrograms.SimpleShader.CreateProgram();
+    } else {
+        this.program = shader;
+    }
 }
 
 Cono.prototype.getRadioMin = function() {
@@ -134,12 +130,5 @@ Cono.prototype.initGL = function(gl) {
 };
 
 Cono.prototype.draw = function(dc) {
-    var gl = dc.gl;
-
-    this.program.prepare(gl,
-        dc.pM, dc.mM,
-        this.vertexBuffer, this.colorBuffer);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-    gl.drawElements(gl.TRIANGLE_STRIP, this.indices.length, gl.UNSIGNED_SHORT, 0);
+    dc.draw(this);
 };

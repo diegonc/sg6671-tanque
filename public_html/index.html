@@ -94,11 +94,15 @@
                 rot[2] = rotCannon.z;
                 
                 // Ruedas
+                var ruedaIzqDelPosition=simulador.tanque.ruedaIzqDelRb.position;
                 var ruedaIzqDelRotation=simulador.tanque.getOrientacionRuedaIzqDel();
 		mundo.tanque.obj.setRuedaIDRotation(ruedaIzqDelRotation);
+                mundo.tanque.obj.setRuedaIDPosition(ruedaIzqDelPosition);
                 
+                var ruedaDerDelPosition=simulador.tanque.ruedaDerDelRb.position;
                 var ruedaDerDelRotation=simulador.tanque.getOrientacionRuedaDerDel();          
 		mundo.tanque.obj.setRuedaDDRotation(ruedaDerDelRotation);
+                mundo.tanque.obj.setRuedaDDPosition(ruedaDerDelPosition);
             }
 
             function tick() {
@@ -113,6 +117,20 @@
                 var angVol = document.getElementById("angVol");
                 velMot.innerHTML = simulador.tanque.velocidadMotor;
                 angVol.innerHTML = simulador.tanque.anguloVolante;
+                
+                function cannonVecToArr(vec) {
+                    return [vec.x.toFixed(3), vec.y.toFixed(3), vec.z.toFixed(3)];
+                }
+                
+                var posRDI = document.getElementById("posRDI");
+                var rotRDI = document.getElementById("rotRDI");
+                var posRDD = document.getElementById("posRDD");
+                var rotRDD = document.getElementById("rotRDD");
+
+                posRDI.innerHTML = cannonVecToArr(simulador.tanque.ruedaIzqDelRb.position);
+                rotRDI.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaIzqDel());
+                posRDD.innerHTML = cannonVecToArr(simulador.tanque.ruedaDerDelRb.position);
+                rotRDD.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaDerDel());
             }
             
             function start() {
@@ -172,6 +190,18 @@
             </div>
             <div>
                 Angulo Volante: <span id="angVol"></span>
+            </div>
+            <div>
+                Posicion Rueda Del. Izq.: <span id="posRDI"></span>
+            </div>
+            <div>
+                Rotacion Rueda Del. Izq.: <span id="rotRDI"></span>
+            </div>
+            <div>
+                Posicion Rueda Del. Der.: <span id="posRDD"></span>
+            </div>
+            <div>
+                Rotacion Rueda Del. Der.: <span id="rotRDD"></span>
             </div>
         </div>
     </body>

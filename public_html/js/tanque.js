@@ -113,8 +113,8 @@ Tanque.prototype.draw = function(dc) {
     
     mat4.set(dc.mM, mM);
     mat4.multiply(mM, this.matCarroceria);
-    this.carroceria.draw(new CarroceriaDrawContext(gl, pM, mM));
-    
+    this.carroceria.draw(new CarroceriaDrawContext(gl, pM, mM, dc.light));
+
     mat4.set(dc.mM, mM);
     mat4.multiply(mM, this.matBaseTorreta);
     this.baseTorreta.draw(new BaseTorretaDrawContext(gl, pM, mM));

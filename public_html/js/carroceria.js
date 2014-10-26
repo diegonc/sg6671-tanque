@@ -1,7 +1,8 @@
-function CarroceriaDrawContext(gl, pM, mM) {
+function CarroceriaDrawContext(gl, pM, mM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mM = mM;
+    this.light = light;
 }
 
 function Carroceria(color) {
@@ -108,9 +109,9 @@ function Carroceria(color) {
         this.colors.push(color[2] * factorB);
         this.colors.push(color[3]);
     }
-    
+
     // Shader
-    this.program = ShaderPrograms.SimpleShader.CreateProgram();
+    this.program = ShaderPrograms.SimpleIllumination.CreateProgram();
 }
 
 Carroceria.prototype.initGL = function(gl) {
@@ -140,11 +141,10 @@ Carroceria.prototype.initGL = function(gl) {
 
 Carroceria.prototype.draw = function(dc) {
     var gl = dc.gl;
-
-    this.program.prepare(gl,
-        dc.pM, dc.mM,
-        this.vertexBuffer, this.colorBuffer);
-
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-    gl.drawElements(gl.TRIANGLE_STRIP, this.indices.length, gl.UNSIGNED_SHORT, 0);
+    var nM = mat3.create();
+    mat4.toInverseMat3(dc.mM, nM);
+    mat3.transpose(nM);
+    var ctx = new ShaderPrograms.SimpleIllumination.DrawContext(
+            gl, dc.pM, dc.mM, nM, dc.light, true);
+    ctx.draw(this);
 };

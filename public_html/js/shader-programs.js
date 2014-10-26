@@ -46,7 +46,17 @@ ShaderPrograms.SimpleShader.getInstance = function () {
           this.bindColors(gl, c);
       },
       activate: function (gl) {
+          if (currentShader !== undefined) {
+              currentShader.deactivate(gl);
+          }
           gl.useProgram(this.program.prg);
+          gl.enableVertexAttribArray(this.program.aVertexPosition);
+          gl.enableVertexAttribArray(this.program.aVertexColor);
+          currentShader = this;
+      },
+      deactivate: function (gl) {
+          gl.disableVertexAttribArray(this.program.aVertexPosition);
+          gl.disableVertexAttribArray(this.program.aVertexColor);
       },
       bindMatrices: function (gl, pM, mvM) {
           gl.uniformMatrix4fv(this.program.uPMatrix, false, pM);
@@ -88,6 +98,7 @@ ShaderPrograms.SimpleShader.getInstance = function () {
           this.program.uMVMatrix = gl.getUniformLocation(
                   this.program.prg, "uMVMatrix");
 
+          this.deactivate(gl);
           this._initialized = true;
       }
   };
@@ -186,7 +197,19 @@ ShaderPrograms.SimpleIllumination.getInstance = function() {
           this.bindLightning(gl, ac, lp, dc, ul);
       },
       activate: function (gl) {
+          if (currentShader !== undefined) {
+              currentShader.deactivate(gl);
+          }
           gl.useProgram(this.program.prg);
+          gl.enableVertexAttribArray(this.program.aVertexPosition);
+          gl.enableVertexAttribArray(this.program.aVertexNormal);
+          gl.enableVertexAttribArray(this.program.aVertexColor);
+          currentShader = this;
+      },
+      deactivate: function (gl) {
+          gl.disableVertexAttribArray(this.program.aVertexPosition);
+          gl.disableVertexAttribArray(this.program.aVertexNormal);
+          gl.disableVertexAttribArray(this.program.aVertexColor);
       },
       bindMatrices: function (gl, pM, mvM, nM) {
           gl.uniformMatrix4fv(this.program.uPMatrix, false, pM);
@@ -256,6 +279,7 @@ ShaderPrograms.SimpleIllumination.getInstance = function() {
                   this.program.prg, "uDirectionalColor");
           this.program.uUseLighting = gl.getUniformLocation(
                   this.program.prg, "uUseLighting");
+          this.deactivate(gl);
           this._initialized = true;
       }
   };

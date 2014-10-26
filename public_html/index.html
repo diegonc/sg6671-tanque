@@ -9,6 +9,7 @@
         <script type="text/javascript" src="js/hashCode.js"></script>
         <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
         <script type="text/javascript" src="js/webgl-utils.js"></script>
+        <script type="text/javascript" src="js/webgl-debug.js"></script>
         <script type="text/javascript" src="js/cannon.js"></script>
         <script type="text/javascript" src="js/simulador-fisico.js"></script>
         
@@ -31,6 +32,7 @@
         <script type="text/javascript" src="js/mundo.js"></script>
         
         <script type="text/javascript">
+            var currentShader = undefined;
             var mundo = new Mundo();
             var simulador = new Simulador();
             
@@ -112,6 +114,7 @@
                 var canvas = document.getElementById("escena");
                 gl = WebGLUtils.setupWebGL(canvas);
                 if (gl) {
+                    gl = WebGLDebugUtils.makeDebugContext(gl);
                     gl.viewportHeight = canvas.height;
                     gl.viewportWidth = canvas.width;
                     gl.clearColor(0.0, 0.0, 0.0, 1.0);

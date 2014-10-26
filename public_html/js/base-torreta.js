@@ -1,14 +1,16 @@
-function BaseTorretaDrawContext(gl, pM, mM) {
+function BaseTorretaDrawContext(gl, pM, mM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mM = mM;
+    this.light = light;
 }
 
 function BaseTorreta() {
+    var prg = ShaderPrograms.SimpleIllumination.CreateProgram();
     /* Partes del objeto */
     this.torreta = new Torreta([0.161, 0.498, 0.549, 1.0]);
-    this.montaje = Primitivas.cilindro(64, 10, [0.573, 0.188, 0.514, 1.0]);
-    this.base = Primitivas.cono(64, 10, 0.5, [0.573, 0.188, 0.514, 1.0]);
+    this.montaje = Primitivas.cilindro(64, 10, [0.573, 0.188, 0.514, 1.0], prg);
+    this.base = Primitivas.cono(64, 10, 0.5, [0.573, 0.188, 0.514, 1.0], prg);
     
     /* Parametros constructivos */
     this.alturaTorreta = 1.3;
@@ -57,19 +59,25 @@ BaseTorreta.prototype.crearMatrizTorreta = function() {
 BaseTorreta.prototype.draw = function(dc) {
     var gl = dc.gl;
     var m;
+    var nM = mat3.create();
 
-    var baseDC = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM);
     m = mat4.create(dc.mM);
     mat4.multiply(m, this.matrizBase);
-    baseDC.mvMatrix = m;
-    this.base.draw(baseDC);
+    mat4.toInverseMat3(m, nM);
+    mat3.transpose(nM);
+    this.base.draw(
+            new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, m, nM, dc.light, true));
     
     var matrizMontaje = this.crearMatrizMontaje();
-    var montajeDC = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM);
     m = mat4.create(dc.mM);
+
     mat4.multiply(m, matrizMontaje);
-    montajeDC.mvMatrix = m;
-    this.montaje.draw(montajeDC);
+    mat4.toInverseMat3(m, nM);
+    mat3.transpose(nM);
+    this.montaje.draw(
+            new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, m, nM, dc.light, true));
     
     var matrizTorreta = this.crearMatrizTorreta();
     var torretaDC = new TorretaDrawContext(gl, dc.pM);

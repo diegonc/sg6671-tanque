@@ -117,7 +117,7 @@ Tanque.prototype.draw = function(dc) {
 
     mat4.set(dc.mM, mM);
     mat4.multiply(mM, this.matBaseTorreta);
-    this.baseTorreta.draw(new BaseTorretaDrawContext(gl, pM, mM));
+    this.baseTorreta.draw(new BaseTorretaDrawContext(gl, pM, mM, dc.light));
     
     var rdc = new RuedaDrawContext(gl, pM, undefined, dc.light);
     mat4.set(dc.mM, mM);

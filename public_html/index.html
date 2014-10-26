@@ -40,7 +40,7 @@
             
             var light = new Light(
                 [0.2, 0.2, 0.2], // ambientColor
-                [100.0, 100.0, -30.0], // position
+                [100.0, 100.0, -30.0], // World position
                 [0.7, 0.7, 0.7] // directionalColor
             );
             
@@ -55,9 +55,8 @@
                 var camara = mat4.create();
                 mat4.identity(camara);
                 mat4.translate(camara, [0, 0, -zoom]);
-                
-                light.position = [0.0, 0.0, 0.0];
-                mat4.multiplyVec3(camara, light.position);
+
+                light.applyCamera(camara);
 
                 var rotZ = mat4.create();
                 mat4.identity(rotZ);

@@ -30,8 +30,8 @@ Mundo.prototype.draw = function(dc) {
     mat4.translate(mM, [tx, ty, tz]);
     
     var rx = this.tanque.rotation[0];
-    var ry = this.tanque.rotation[0];
-    var rz = this.tanque.rotation[0];
+    var ry = this.tanque.rotation[1];
+    var rz = this.tanque.rotation[2];
     mat4.rotateX(mM, rx);
     mat4.rotateZ(mM, rz);
     mat4.rotateY(mM, ry);

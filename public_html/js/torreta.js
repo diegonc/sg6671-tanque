@@ -1,20 +1,22 @@
-function TorretaDrawContext(gl, pM, mvM) {
+function TorretaDrawContext(gl, pM, mvM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mvM = mvM;
+    this.light = light;
 }
 
 function Torreta(color) {
+    var prg = ShaderPrograms.SimpleIllumination.CreateProgram();
     this.caniones = [
         new Canion(color),
         new Canion(color),
         new Canion(color),
         new Canion(color)
     ];
-    this.eje = Primitivas.cilindro(64, 10, color);
+    this.eje = Primitivas.cilindro(64, 10, color, prg);
     this.laterales = [
-        Primitivas.caja(4, 5, color),
-        Primitivas.caja(4, 5, color)
+        Primitivas.caja(4, 5, color, prg),
+        Primitivas.caja(4, 5, color, prg)
     ];
     
     this.canionTamX = 0.25;
@@ -109,6 +111,8 @@ Torreta.prototype.initGL = function(gl) {
 Torreta.prototype.draw = function (dc) {
     var gl = dc.gl;
     var m;
+    var nM = mat3.create();
+    
     var ctx = new CanionDrawContext(gl, dc.pM, dc.mvM);
     for (var i=0; i < this.caniones.length; i++) {
         m = mat4.create(dc.mvM);
@@ -119,14 +123,21 @@ Torreta.prototype.draw = function (dc) {
 
     m = mat4.create(dc.mvM);
     mat4.multiply(m, this.matrizEje);
-    ctx = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM, m);
+    mat4.toInverseMat3(m, nM);
+    mat3.transpose(nM);
+    ctx = new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, m, nM, dc.light, true);
     this.eje.draw(ctx);
     
-    ctx = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM);
+    ctx = new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, undefined, undefined, dc.light, true);
     for (var i=0; i < this.laterales.length; i++) {
         m = mat4.create(dc.mvM);    
         mat4.multiply(m, this.matricesLaterales[i]);
+        mat4.toInverseMat3(m, nM);
+        mat3.transpose(nM);
         ctx.mvMatrix = m;
+        ctx.nMatrix = nM;
         this.laterales[i].draw(ctx);
     }
 };

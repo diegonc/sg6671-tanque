@@ -80,7 +80,7 @@ BaseTorreta.prototype.draw = function(dc) {
                     gl, dc.pM, m, nM, dc.light, true));
     
     var matrizTorreta = this.crearMatrizTorreta();
-    var torretaDC = new TorretaDrawContext(gl, dc.pM);
+    var torretaDC = new TorretaDrawContext(gl, dc.pM, undefined, dc.light);
     m = mat4.create(dc.mM);
     mat4.multiply(m, matrizTorreta);
     torretaDC.mvM = m;

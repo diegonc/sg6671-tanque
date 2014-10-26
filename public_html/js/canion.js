@@ -1,12 +1,14 @@
-function CanionDrawContext(gl, pM, mvM) {
+function CanionDrawContext(gl, pM, mvM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mvM = mvM;
+    this.light = light;
 }
 
 function Canion(color) {
-    this.caja = Primitivas.caja(4, 5, color);
-    this.cilindro = Primitivas.cilindro(64, 10, color);
+    var prg = ShaderPrograms.SimpleIllumination.CreateProgram();
+    this.caja = Primitivas.caja(4, 5, color, prg);
+    this.cilindro = Primitivas.cilindro(64, 10, color, prg);
     this.cilPos = 3;
 
     this.matCaja = this.createCajaMatrix();    
@@ -36,16 +38,23 @@ Canion.prototype.initGL = function (gl) {
 Canion.prototype.draw = function(dc) {
     var mvM = mat4.create();
     var gl = dc.gl;
+    var nM = mat3.create();
     
     mat4.set(dc.mvM, mvM);
     mat4.multiply(mvM, this.matCaja);
-    var cajaDc = new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM, mvM);
+    mat4.toInverseMat3(mvM, nM);
+    mat3.transpose(nM);
+    var cajaDc = new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, mvM, nM, dc.light, true);
     this.caja.draw(cajaDc);
     
     mat4.set(dc.mvM, mvM);
     this.matCilindro = this.createCilMatrix();
     mat4.multiply(mvM, this.matCilindro);
-    this.cilindro.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, dc.pM, mvM));
+    mat4.toInverseMat3(mvM, nM);
+    mat3.transpose(nM);
+    this.cilindro.draw(new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, mvM, nM, dc.light, true));
 };
 
 Canion.prototype.update = function(frameNum) {

@@ -113,7 +113,7 @@ Torreta.prototype.draw = function (dc) {
     var m;
     var nM = mat3.create();
     
-    var ctx = new CanionDrawContext(gl, dc.pM, dc.mvM);
+    var ctx = new CanionDrawContext(gl, dc.pM, dc.mvM, dc.light);
     for (var i=0; i < this.caniones.length; i++) {
         m = mat4.create(dc.mvM);
         mat4.multiply(m, this.matricesCaniones[i]);

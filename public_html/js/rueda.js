@@ -1,13 +1,15 @@
-function RuedaDrawContext(gl, pM, mM) {
+function RuedaDrawContext(gl, pM, mM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mM = mM;
+    this.light = light;
 }
 
 function Rueda(color) {
-    this.ladoIzq = Primitivas.cono(64, 10, 0.2, color);
-    this.centro = Primitivas.cilindro(64, 10, color);
-    this.ladoDer = Primitivas.cono(64, 10, 0.2, color);
+    var shader = ShaderPrograms.SimpleIllumination.CreateProgram();
+    this.ladoIzq = Primitivas.cono(64, 10, 0.2, color, shader);
+    this.centro = Primitivas.cilindro(64, 10, color, shader);
+    this.ladoDer = Primitivas.cono(64, 10, 0.2, color, shader);
     
     function crearMatIzq() {
         var m = mat4.create();
@@ -47,16 +49,30 @@ Rueda.prototype.draw = function(dc) {
     var gl = dc.gl;
     var pM = dc.pM;
     var mvM = mat4.create();
-    
+    var nM = mat3.create();
+
     mat4.set(dc.mM, mvM);
     mat4.multiply(mvM, this.matIzq);
-    this.ladoIzq.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, pM, mvM));
+    mat4.toInverseMat3(mvM, nM);
+    mat3.transpose(nM);
     
+    this.ladoIzq.draw(
+            new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, mvM, nM, dc.light, true));
+
     mat4.set(dc.mM, mvM);
     mat4.multiply(mvM, this.matCen);
-    this.centro.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, pM, mvM));
+    mat4.toInverseMat3(mvM, nM);
+    mat3.transpose(nM);
+    this.centro.draw(
+            new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, mvM, nM, dc.light, true));
     
     mat4.set(dc.mM, mvM);
     mat4.multiply(mvM, this.matDer);
-    this.ladoDer.draw(new ShaderPrograms.SimpleShader.DrawContext(gl, pM, mvM));
+    mat4.toInverseMat3(mvM, nM);
+    mat3.transpose(nM);
+    this.ladoDer.draw(
+            new ShaderPrograms.SimpleIllumination.DrawContext(
+                    gl, dc.pM, mvM, nM, dc.light, true));
 };

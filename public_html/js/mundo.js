@@ -1,7 +1,8 @@
-function MundoDrawContext(gl, pM, mM) {
+function MundoDrawContext(gl, pM, mM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mM = mM;
+    this.light = light;
 }
 
 function Mundo() {
@@ -38,5 +39,5 @@ Mundo.prototype.draw = function(dc) {
     mat4.rotateZ(mM, Math.PI / 2);
     mat4.rotateX(mM, Math.PI / 2);
 
-    this.tanque.obj.draw(new TanqueDrawContext(gl, pM, mM));
+    this.tanque.obj.draw(new TanqueDrawContext(gl, pM, mM, dc.light));
 };

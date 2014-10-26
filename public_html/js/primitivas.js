@@ -10,7 +10,7 @@ Primitivas.cono = function(cortes, franjas, zmax, color, shader) {
     var hash = HashCode.value(args);
     var instance = this.registro[hash];
     if (instance === undefined) {
-        instance = new Cono(cortes, franjas, zmax, color);
+        instance = new Cono(cortes, franjas, zmax, color, shader);
         this.registro[hash] = instance;
     }
     return instance;
@@ -25,7 +25,7 @@ Primitivas.cilindro = function(cortes, franjas, color, shader) {
     var hash = HashCode.value(args);
     var instance = this.registro[hash];
     if (instance === undefined) {
-        instance = new Cilindro(cortes, franjas, color);
+        instance = new Cilindro(cortes, franjas, color, shader);
         this.registro[hash] = instance;
     }
     return instance;
@@ -40,7 +40,7 @@ Primitivas.caja = function(cortes, franjas, color, shader) {
     var hash = HashCode.value(args);
     var instance = this.registro[hash];
     if (instance === undefined) {
-        instance = new Caja(cortes, franjas, color);
+        instance = new Caja(cortes, franjas, color, shader);
         this.registro[hash] = instance;
     }
     return instance;

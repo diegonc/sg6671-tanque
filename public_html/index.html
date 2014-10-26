@@ -16,6 +16,7 @@
         <script type="text/javascript" src="js/shader-utils.js"></script>
         <script type="text/javascript" src="js/shader-programs.js"></script>
         <script type="text/javascript" src="js/poligono.js"></script>
+        <script type="text/javascript" src="js/light.js"></script>
 
         <script type="text/javascript" src="js/cono.js"></script>
         <script type="text/javascript" src="js/cilindro.js"></script>
@@ -37,6 +38,12 @@
             var angY = 0*1.6;
             var zoom = 70;
             
+            var light = new Light(
+                [0.2, 0.2, 0.2], // ambientColor
+                [100.0, 100.0, -30.0], // position
+                [0.7, 0.7, 0.7] // directionalColor
+            );
+            
             function drawScene() {
                 gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -48,6 +55,9 @@
                 var camara = mat4.create();
                 mat4.identity(camara);
                 mat4.translate(camara, [0, 0, -zoom]);
+                
+                light.position = [0.0, 0.0, 0.0];
+                mat4.multiplyVec3(camara, light.position);
 
                 var rotZ = mat4.create();
                 mat4.identity(rotZ);
@@ -63,7 +73,7 @@
                 mat4.multiply(mvMatrix, rotZ);
                 mat4.multiply(mvMatrix, rotY);
 
-                mundo.draw(new MundoDrawContext(gl, pMatrix, mvMatrix));
+                mundo.draw(new MundoDrawContext(gl, pMatrix, mvMatrix, light));
             }
             
             function updateWorld() {

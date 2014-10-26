@@ -1,7 +1,8 @@
-function TanqueDrawContext(gl, pM, mM) {
+function TanqueDrawContext(gl, pM, mM, light) {
     this.gl = gl;
     this.pM = pM;
     this.mM = mM;
+    this.light = light;
 }
 
 function Tanque() {
@@ -118,7 +119,7 @@ Tanque.prototype.draw = function(dc) {
     mat4.multiply(mM, this.matBaseTorreta);
     this.baseTorreta.draw(new BaseTorretaDrawContext(gl, pM, mM));
     
-    var rdc = new RuedaDrawContext(gl, pM);
+    var rdc = new RuedaDrawContext(gl, pM, undefined, dc.light);
     mat4.set(dc.mM, mM);
     mat4.multiply(mM, this.calcularMatrizRTI());
     rdc.mM = mM;

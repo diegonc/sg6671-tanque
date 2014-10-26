@@ -191,7 +191,7 @@ ShaderPrograms.SimpleIllumination.getInstance = function() {
       bindMatrices: function (gl, pM, mvM, nM) {
           gl.uniformMatrix4fv(this.program.uPMatrix, false, pM);
           gl.uniformMatrix4fv(this.program.uMVMatrix, false, mvM);
-          gl.uniformMatrix4fv(this.program.uNMatrix, false, nM);
+          gl.uniformMatrix3fv(this.program.uNMatrix, false, nM);
       },
       bindPosition: function (gl, vertexBuffer) {
           gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -277,10 +277,6 @@ ShaderPrograms.SimpleIllumination.DrawContext.prototype.draw = function(obj) {
         obj.vertexBuffer, obj.normalBuffer, obj.colorBuffer,
         this.light.ambientColor, this.light.position,
         this.light.directionalColor, this.useLightning);
-        
-    this.program.prepare(gl,
-        dc.pM, dc.mM,
-        this.vertexBuffer, this.colorBuffer);
 
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, obj.indexBuffer);
     this.gl.drawElements(this.gl.TRIANGLE_STRIP, obj.indices.length,

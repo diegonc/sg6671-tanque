@@ -108,6 +108,11 @@
                 simulador.update();
                 updateWorld();                
                 drawScene();
+                
+                var velMot = document.getElementById("velMot");
+                var angVol = document.getElementById("angVol");
+                velMot.innerHTML = simulador.tanque.velocidadMotor;
+                angVol.innerHTML = simulador.tanque.anguloVolante;
             }
             
             function start() {
@@ -160,6 +165,14 @@
             id="escena"
             width="800"
             height="600">
-        </canvas>        
+        </canvas>
+        <div style="float: right;">
+            <div>
+                Velocidad Motor: <span id="velMot"></span>
+            </div>
+            <div>
+                Angulo Volante: <span id="angVol"></span>
+            </div>
+        </div>
     </body>
 </html>

@@ -52,7 +52,7 @@
                 
                 var pMatrix = mat4.create();
                 mat4.perspective(30, gl.viewportWidth / gl.viewportHeight,
-                    0.1, 100.0, pMatrix);
+                    0.1, 1000.0, pMatrix);
                 
                 var camara = mat4.create();
                 mat4.identity(camara);

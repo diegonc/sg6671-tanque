@@ -122,11 +122,15 @@
                     return [vec.x.toFixed(3), vec.y.toFixed(3), vec.z.toFixed(3)];
                 }
                 
+                var posCha = document.getElementById("posCha");
+                var rotCha = document.getElementById("rotCha");
                 var posRDI = document.getElementById("posRDI");
                 var rotRDI = document.getElementById("rotRDI");
                 var posRDD = document.getElementById("posRDD");
                 var rotRDD = document.getElementById("rotRDD");
 
+                posCha.innerHTML = cannonVecToArr(simulador.tanque.chassisRb.position);
+                rotCha.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionChassis());
                 posRDI.innerHTML = cannonVecToArr(simulador.tanque.ruedaIzqDelRb.position);
                 rotRDI.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaIzqDel());
                 posRDD.innerHTML = cannonVecToArr(simulador.tanque.ruedaDerDelRb.position);
@@ -192,6 +196,12 @@
                 Angulo Volante: <span id="angVol"></span>
             </div>
             <div>
+                Posición Chasis: <span id="posCha"></span>
+            </div>
+            <div>
+                Rotación Chasis: <span id="rotCha"></span>
+            </div>
+            <div>
                 Posicion Rueda Del. Izq.: <span id="posRDI"></span>
             </div>
             <div>
@@ -206,3 +216,4 @@
         </div>
     </body>
 </html>
+

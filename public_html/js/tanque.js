@@ -79,22 +79,23 @@ Tanque.prototype.calcularMatrizRTD = function() {
 Tanque.prototype.calcularMatrizRDI = function() {
     var m = mat4.create();
     mat4.identity(m);
-    //var tx = this.carroceria.ancho / 2 +  this.separacionRuedas;
-    //mat4.translate(m, [tx, -0.58, 1.23]);
-    //mat4.rotateY(m, this.direccionRDI);
-    //mat4.rotateY(m, Math.PI/2);
-    //mat4.rotateZ(m, this.rotacionRDI);
-    var tx = this.posicionRDI[0];
-    var ty = this.posicionRDI[1];
-    var tz = this.posicionRDI[2];
-    mat4.translate(m, [tx, ty, tz]);
+    var tx = this.carroceria.ancho / 2 +  this.separacionRuedas;
+    mat4.translate(m, [tx, -0.58, 1.23]);
+    mat4.rotateY(m, this.direccionRDI);
+    mat4.rotateY(m, Math.PI/2);
+    mat4.rotateZ(m, this.rotacionRDI);
+
+    //var tx = this.posicionRDI[0];
+    //var ty = this.posicionRDI[1];
+    //var tz = this.posicionRDI[2];
+    //mat4.translate(m, [tx, ty, tz]);
     
-    var rx = this.eulerRotDI[0];
-    var ry = this.eulerRotDI[1];
-    var rz = this.eulerRotDI[2];
-    mat4.rotateX(m, rx);
-    mat4.rotateZ(m, rz);
-    mat4.rotateY(m, ry);
+    //var rx = this.eulerRotDI[0];
+    //var ry = this.eulerRotDI[1];
+    //var rz = this.eulerRotDI[2];
+    //mat4.rotateX(m, rx);
+    //mat4.rotateZ(m, rz);
+    //mat4.rotateY(m, ry);
 
     return m;
 };
@@ -137,11 +138,11 @@ Tanque.prototype.draw = function(dc) {
     
     mat4.set(dc.mM, mM);
     mat4.multiply(mM, this.matCarroceria);
-    //this.carroceria.draw(new CarroceriaDrawContext(gl, pM, mM, dc.light));
+    this.carroceria.draw(new CarroceriaDrawContext(gl, pM, mM, dc.light));
 
     mat4.set(dc.mM, mM);
     mat4.multiply(mM, this.matBaseTorreta);
-    //this.baseTorreta.draw(new BaseTorretaDrawContext(gl, pM, mM, dc.light));
+    this.baseTorreta.draw(new BaseTorretaDrawContext(gl, pM, mM, dc.light));
     
     var rdc = new RuedaDrawContext(gl, pM, undefined, dc.light);
     mat4.set(dc.mM, mM);

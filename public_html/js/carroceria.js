@@ -70,10 +70,21 @@ function Carroceria(color) {
     // Tapa trasera de la carrocería
     franjas++;
     tmpPol = this.poligono.transformar(m);
+    for (var i=0; i < tmpPol.normales.length; i++) {
+        tmpPol.normales[i] = [0, 0, -1];
+    }
     agregarPoligono(tmpPol, this.vertices, this.normales);
-    
+
+    function postProcesarPoligono(indice, pol) {
+        if (indice === 0) {
+            for (var i=0; i < pol.normales.length; i++) {
+                pol.normales[i] = [0, 0, -1];
+            }
+        }
+    }
+
     // Franjas intermedias que van desde la parte trasera a la delantera
-    var posZfranja = [0, 1.75, 4.32, 6.90, 9.49, 12.40, 15];
+    var posZfranja = [0, 0, 1.75, 4.32, 6.90, 9.49, 12.40, 15];
     var intermedias = posZfranja.length;
     var z;
     for (var i=0; i < intermedias; i++) {
@@ -81,6 +92,7 @@ function Carroceria(color) {
         mat4.identity(m);
         mat4.translate(m, [0, 0, z]);
         tmpPol = this.poligono.transformar(m);
+        postProcesarPoligono(i, tmpPol);
         franjas++;
         agregarPoligono(tmpPol, this.vertices, this.normales);
     }

@@ -12,6 +12,8 @@
         <script type="text/javascript" src="js/webgl-debug.js"></script>
         <script type="text/javascript" src="js/cannon.js"></script>
         <script type="text/javascript" src="js/simulador-fisico.js"></script>
+        <script type="text/javascript" src="js/camara-tanque.js"></script>
+        <script type="text/javascript" src="js/camara-fija.js"></script>
         
         <script type="text/javascript" src="js/tstrip-utils.js"></script>
         <script type="text/javascript" src="js/shader-utils.js"></script>
@@ -36,10 +38,12 @@
             var currentShader = undefined;
             var mundo = new Mundo();
             var simulador = new Simulador();
+            var camaraTanque = new CamaraTanque(mundo);
+            var camaraFija = new CamaraFija(70);
+            var camaraActual = camaraFija;
             
             var frame = 0;
             var angY = 0*1.6;
-            var zoom = 70;
             
             var light = new Light(
                 [0.2, 0.2, 0.2], // ambientColor
@@ -54,10 +58,8 @@
                 var pMatrix = mat4.create();
                 mat4.perspective(30, gl.viewportWidth / gl.viewportHeight,
                     0.1, 1000.0, pMatrix);
-                
-                var camara = mat4.create();
-                mat4.identity(camara);
-                mat4.translate(camara, [0, 0, -zoom]);
+
+                var camara = camaraActual.getMatrix();
 
                 light.applyCamera(camara);
 
@@ -180,7 +182,11 @@
                     simulador.tanque.incrementarVelocidad(2);
 		} else if (actualkey==="S"){
                     simulador.tanque.incrementarVelocidad(-2);
-		}
+		} else if (actualkey==="1") {
+                    camaraActual = camaraFija;
+                } else if (actualkey==="2") {
+                    camaraActual = camaraTanque;
+                }
             }
         </script>
     </head>

@@ -32,6 +32,7 @@
         <script type="text/javascript" src="js/mundo.js"></script>
         
         <script type="text/javascript">
+            var debug = true;
             var currentShader = undefined;
             var mundo = new Mundo();
             var simulador = new Simulador();
@@ -105,6 +106,10 @@
                 mundo.tanque.obj.setRuedaDDPosition(ruedaDerDelPosition);
             }
 
+            function cannonVecToArr(vec) {
+                return [vec.x.toFixed(3), vec.y.toFixed(3), vec.z.toFixed(3)];
+            }
+
             function tick() {
                 requestAnimFrame(tick);
                 //frame += 1;
@@ -118,10 +123,7 @@
                 velMot.innerHTML = simulador.tanque.velocidadMotor;
                 angVol.innerHTML = simulador.tanque.anguloVolante;
                 
-                function cannonVecToArr(vec) {
-                    return [vec.x.toFixed(3), vec.y.toFixed(3), vec.z.toFixed(3)];
-                }
-                
+                if (debug) {
                 var posCha = document.getElementById("posCha");
                 var rotCha = document.getElementById("rotCha");
                 var posRDI = document.getElementById("posRDI");
@@ -135,6 +137,7 @@
                 rotRDI.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaIzqDel());
                 posRDD.innerHTML = cannonVecToArr(simulador.tanque.ruedaDerDelRb.position);
                 rotRDD.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaDerDel());
+                }
             }
             
             function start() {

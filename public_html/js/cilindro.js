@@ -58,9 +58,12 @@ function Cilindro(cortes, franjas, color, shader) {
     // Colores de los vertices del cilindro
     for (var i = 0; i < (FRANJAS + 3); i++) {
       for (var j = 0; j < CORTES; j++) {
-        this.colors.push(color[0]);
-        this.colors.push(color[1]);
-        this.colors.push(color[2]);
+        var factorR = Math.random() * (1.2 - 0.8) + 0.8;
+        var factorG = Math.random() * (1.2 - 0.8) + 0.8;
+        var factorB = Math.random() * (1.2 - 0.8) + 0.8;
+        this.colors.push(Math.min(1, color[0] * factorR));
+        this.colors.push(Math.min(1, color[1] * factorG));
+        this.colors.push(Math.min(1, color[2] * factorB));
         this.colors.push(color[3]);
       }
     }

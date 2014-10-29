@@ -88,14 +88,15 @@
                 rot[2] = rotCannon.z;
                 
                 // Ruedas delanteras
+                var angDireccion = simulador.tanque.anguloVolante * Math.PI / 180;
                 var ruedaIzqDelPosition=simulador.tanque.ruedaIzqDelRb.position;
                 var ruedaIzqDelRotation=simulador.tanque.getOrientacionRuedaIzqDel();
-		mundo.tanque.obj.setRuedaIDRotation(ruedaIzqDelRotation);
+		mundo.tanque.obj.setRuedaIDRotation(ruedaIzqDelRotation, angDireccion);
                 mundo.tanque.obj.setRuedaIDPosition(ruedaIzqDelPosition);
                 
                 var ruedaDerDelPosition=simulador.tanque.ruedaDerDelRb.position;
                 var ruedaDerDelRotation=simulador.tanque.getOrientacionRuedaDerDel();          
-		mundo.tanque.obj.setRuedaDDRotation(ruedaDerDelRotation);
+		mundo.tanque.obj.setRuedaDDRotation(ruedaDerDelRotation, angDireccion);
                 mundo.tanque.obj.setRuedaDDPosition(ruedaDerDelPosition);
                 
                 // Ruedas traseras

@@ -119,9 +119,9 @@ Tanque.prototype.setRuedaTDRotation = function(cannonVec) {
     this.rotacionRTD = cannonVec.y;
 };
 
-Tanque.prototype.setRuedaIDRotation = function(cannonVec) {
+Tanque.prototype.setRuedaIDRotation = function(cannonVec, direccion) {
     this.rotacionRDI = cannonVec.y;
-    this.direccionRDI = cannonVec.z;
+    this.direccionRDI = -direccion;
     this.eulerRotDI = [cannonVec.x, cannonVec.y, cannonVec.z];
 };
 
@@ -129,9 +129,9 @@ Tanque.prototype.setRuedaIDPosition = function(cannonVec) {
     this.posicionRDI = [cannonVec.x, cannonVec.y, cannonVec.z];
 };
 
-Tanque.prototype.setRuedaDDRotation = function(cannonVec) {
+Tanque.prototype.setRuedaDDRotation = function(cannonVec, direccion) {
     this.rotacionRDD = cannonVec.y;
-    this.direccionRDD = cannonVec.z;
+    this.direccionRDD = -direccion;
     this.eulerRotDD = [cannonVec.x, cannonVec.y, cannonVec.z];
 };
 

@@ -28,7 +28,7 @@ function TanqueSim(world) {
         console.log("TanqueSim.crearCuerpoRigidosTanque");
         // creamos el cuerpo rigido del chassis	
         var chassisShape = new CANNON.Box(new CANNON.Vec3(this.largoChassis / 2, this.anchoChassis / 2, this.altoChassis / 2));
-        this.chassisRb = new CANNON.RigidBody(mass * 100, chassisShape);
+        this.chassisRb = new CANNON.RigidBody(mass * 10, chassisShape);
         this.chassisRb.useQuaternion = true;
         this.chassisRb.position.set(0, 0, alturaInicial);
 
@@ -192,7 +192,7 @@ function Simulador() {
         var cylinderShape = new CANNON.Cylinder(10, 50, 10, 16);
         var cylinderBody = new CANNON.RigidBody(0, cylinderShape);
         cylinderBody.position.set(80, 0, -5);// el 0 es el centro del cilindro, 
-        world.add(cylinderBody);
+        //world.add(cylinderBody);
 
         var wheelGroundContactMaterial = new CANNON.ContactMaterial(groundMaterial, this.tanque.wheelMaterial, friccion, restitucion);
         world.addContactMaterial(wheelGroundContactMaterial);

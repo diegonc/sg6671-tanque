@@ -34,6 +34,7 @@
         <script type="text/javascript" src="js/mundo.js"></script>
         
         <script type="text/javascript">
+            var debugWebGLContext = false;
             var debug = true;
             var currentShader = undefined;
             var mundo = new Mundo();
@@ -135,7 +136,9 @@
                 var canvas = document.getElementById("escena");
                 gl = WebGLUtils.setupWebGL(canvas);
                 if (gl) {
-                    gl = WebGLDebugUtils.makeDebugContext(gl);
+                    if (debugWebGLContext) {
+                        gl = WebGLDebugUtils.makeDebugContext(gl);
+                    }
                     gl.viewportHeight = canvas.height;
                     gl.viewportWidth = canvas.width;
                     gl.clearColor(0.0, 0.0, 0.0, 1.0);

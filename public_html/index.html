@@ -41,10 +41,9 @@
             var camaraTanque = new CamaraTanque(mundo);
             var camaraFija = new CamaraFija(70);
             var camaraActual = camaraFija;
-            
+
             var frame = 0;
-            var angY = 0*1.6;
-            
+
             var light = new Light(
                 [0.2, 0.2, 0.2], // ambientColor
                 [100.0, 100.0, 30.0], // World position
@@ -63,19 +62,9 @@
 
                 light.applyCamera(camara);
 
-                var rotZ = mat4.create();
-                mat4.identity(rotZ);
-                mat4.rotate(rotZ, frame*0.01, [1, 0, 0]);
-                
-                var rotY = mat4.create();
-                mat4.identity(rotY);
-                mat4.rotate(rotY, angY, [0, 1, 0]);
-
                 var mvMatrix = mat4.create();
                 mat4.identity(mvMatrix);
                 mat4.multiply(mvMatrix, camara);
-                mat4.multiply(mvMatrix, rotZ);
-                mat4.multiply(mvMatrix, rotY);
 
                 mundo.draw(new MundoDrawContext(gl, pMatrix, mvMatrix, light));
             }

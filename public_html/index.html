@@ -123,6 +123,10 @@
                 var rotRDI = document.getElementById("rotRDI");
                 var posRDD = document.getElementById("posRDD");
                 var rotRDD = document.getElementById("rotRDD");
+                var posRTI = document.getElementById("posRTI");
+                var rotRTI = document.getElementById("rotRTI");
+                var posRTD = document.getElementById("posRTD");
+                var rotRTD = document.getElementById("rotRTD");
 
                 posCha.innerHTML = cannonVecToArr(simulador.tanque.chassisRb.position);
                 rotCha.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionChassis());
@@ -130,6 +134,10 @@
                 rotRDI.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaIzqDel());
                 posRDD.innerHTML = cannonVecToArr(simulador.tanque.ruedaDerDelRb.position);
                 rotRDD.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaDerDel());
+                posRTI.innerHTML = cannonVecToArr(simulador.tanque.ruedaIzqTraRb.position);
+                rotRTI.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaIzqTra());
+                posRTD.innerHTML = cannonVecToArr(simulador.tanque.ruedaDerTraRb.position);
+                rotRTD.innerHTML = cannonVecToArr(simulador.tanque.getOrientacionRuedaDerTra());
                 }
             }
             
@@ -218,6 +226,19 @@
             </div>
             <div>
                 Rotacion Rueda Del. Der.: <span id="rotRDD"></span>
+            </div>
+            
+            <div>
+                Posicion Rueda Tra. Izq.: <span id="posRTI"></span>
+            </div>
+            <div>
+                Rotacion Rueda Tra. Izq.: <span id="rotRTI"></span>
+            </div>
+            <div>
+                Posicion Rueda Tra. Der.: <span id="posRTD"></span>
+            </div>
+            <div>
+                Rotacion Rueda Tra. Der.: <span id="rotRTD"></span>
             </div>
         </div>
     </body>

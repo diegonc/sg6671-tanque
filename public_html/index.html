@@ -10,6 +10,7 @@
         <script type="text/javascript" src="js/glMatrix-0.9.5.min.js"></script>
         <script type="text/javascript" src="js/webgl-utils.js"></script>
         <script type="text/javascript" src="js/webgl-debug.js"></script>
+        <script type="text/javascript" src="js/eventos.js"></script>
         <script type="text/javascript" src="js/cannon.js"></script>
         <script type="text/javascript" src="js/simulador-fisico.js"></script>
         <script type="text/javascript" src="js/camara-tanque.js"></script>
@@ -146,6 +147,8 @@
 
                     mundo.initGL(gl);
                     
+                    camaraFija.bindEvents(canvas);
+
                     tick();
                 }
             }

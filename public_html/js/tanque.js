@@ -111,6 +111,14 @@ Tanque.prototype.calcularMatrizRDD = function() {
     return m;
 };
 
+Tanque.prototype.setRuedaTIRotation = function(cannonVec) {
+    this.rotacionRTI = cannonVec.y;
+};
+
+Tanque.prototype.setRuedaTDRotation = function(cannonVec) {
+    this.rotacionRTD = cannonVec.y;
+};
+
 Tanque.prototype.setRuedaIDRotation = function(cannonVec) {
     this.rotacionRDI = cannonVec.y;
     this.direccionRDI = cannonVec.z;

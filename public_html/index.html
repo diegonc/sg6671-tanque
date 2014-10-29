@@ -87,7 +87,7 @@
                 rot[1] = rotCannon.y;
                 rot[2] = rotCannon.z;
                 
-                // Ruedas
+                // Ruedas delanteras
                 var ruedaIzqDelPosition=simulador.tanque.ruedaIzqDelRb.position;
                 var ruedaIzqDelRotation=simulador.tanque.getOrientacionRuedaIzqDel();
 		mundo.tanque.obj.setRuedaIDRotation(ruedaIzqDelRotation);
@@ -97,6 +97,12 @@
                 var ruedaDerDelRotation=simulador.tanque.getOrientacionRuedaDerDel();          
 		mundo.tanque.obj.setRuedaDDRotation(ruedaDerDelRotation);
                 mundo.tanque.obj.setRuedaDDPosition(ruedaDerDelPosition);
+                
+                // Ruedas traseras
+                var ruedaIzqTraRotation=simulador.tanque.getOrientacionRuedaIzqTra();
+                mundo.tanque.obj.setRuedaTIRotation(ruedaIzqTraRotation);
+                var ruedaDerTraRotation=simulador.tanque.getOrientacionRuedaDerTra();
+                mundo.tanque.obj.setRuedaTDRotation(ruedaDerTraRotation);
             }
 
             function cannonVecToArr(vec) {

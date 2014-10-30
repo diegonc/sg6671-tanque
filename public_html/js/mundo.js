@@ -41,3 +41,7 @@ Mundo.prototype.draw = function(dc) {
 
     this.tanque.obj.draw(new TanqueDrawContext(gl, pM, mM, dc.light));
 };
+
+Mundo.prototype.update = function(step) {
+    this.tanque.obj.update(step);
+};

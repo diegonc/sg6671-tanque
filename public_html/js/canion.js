@@ -56,7 +56,3 @@ Canion.prototype.draw = function(dc) {
     this.cilindro.draw(new ShaderPrograms.SimpleIllumination.DrawContext(
                     gl, dc.pM, mvM, nM, dc.light, true));
 };
-
-Canion.prototype.update = function(frameNum) {
-    
-};

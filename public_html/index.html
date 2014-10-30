@@ -115,6 +115,7 @@
                 frame += 1;
 
                 simulador.update();
+                mundo.update(1/60);
                 updateWorld();                
                 drawScene();
                 
@@ -194,6 +195,8 @@
                     simulador.tanque.incrementarVelocidad(-2);
                 } else if (actualkey==="R") {
                     simulador = new Simulador();
+                } else if (actualkey==="F") {
+                    mundo.tanque.obj.disparar();
 		} else if (actualkey==="1") {
                     camaraActual = camaraFija;
                 } else if (actualkey==="2") {

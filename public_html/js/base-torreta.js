@@ -86,3 +86,11 @@ BaseTorreta.prototype.draw = function(dc) {
     torretaDC.mvM = m;
     this.torreta.draw(torretaDC);
 };
+
+BaseTorreta.prototype.update = function(step) {
+    this.torreta.update(step);
+};
+
+BaseTorreta.prototype.disparar = function() {
+    this.torreta.disparar();
+};

@@ -5,6 +5,8 @@ function TorretaDrawContext(gl, pM, mvM, light) {
     this.light = light;
 }
 
+EstadoTorreta = { IDLE: 'IDLE', FIRING: 'FIRING' };
+
 function Torreta(color) {
     var prg = ShaderPrograms.SimpleIllumination.CreateProgram();
     this.caniones = [
@@ -28,6 +30,14 @@ function Torreta(color) {
     this.matricesCaniones = this.crearMatricesCaniones();
     this.matrizEje = this.crearMatrizEje();
     this.matricesLaterales = this.crearMatricesLaterales();
+    
+    // Parametros del disparo
+    this.BACKING_TIME = 0.1;
+    this.RESTORING_TIME = 0.2;
+    this.estado = EstadoTorreta.IDLE;
+    this.canionActual = -1;
+    this.tiempoActual = 0;
+    this.tiempoDisparo = undefined;
 }
 
 Torreta.prototype.crearMatricesCaniones = function() {
@@ -139,5 +149,57 @@ Torreta.prototype.draw = function (dc) {
         ctx.mvMatrix = m;
         ctx.nMatrix = nM;
         this.laterales[i].draw(ctx);
+    }
+};
+
+/*
+ * La posición del cilindro de cada cañon mienstras esta disparando esta
+ * dada por la siguiente función partida:
+ *                  /
+ *                  | 3
+ *                  |    -> elapsedTime <= 0
+ *                  |
+ *                  | 3 - 1.5 * elapsedTime / backingTime
+ *                  |    -> 0 < elapsedTime < backingTime
+ * f(elapsedTime) = |
+ *                  | 1.5 + 1.5 * (elapsedTime - backingTime) / restoringTime
+ *                  |    -> backingTime < elapsedTime < backingTime + restoringTime
+ *                  |
+ *                  | 3
+ *                  |    -> (backingTime + restoringTime) < elapsedTime
+ *                  \
+ */
+Torreta.prototype.posicionCanion = function(elapsedTime) {
+    if (elapsedTime <= 0) {
+        return 3;
+    }
+    if (elapsedTime < this.BACKING_TIME) {
+        return 3 - 1.5 * elapsedTime / this.BACKING_TIME;
+    }
+    if (elapsedTime < (this.BACKING_TIME + this.RESTORING_TIME)) {
+        return 1 + 1.5 * (elapsedTime - this.BACKING_TIME) / this.RESTORING_TIME;
+    }
+    return 3;
+};
+
+Torreta.prototype.update = function(step) {
+    this.tiempoActual += step;
+    if (this.estado === EstadoTorreta.FIRING) {
+        var elapsedTime = this.tiempoActual - this.tiempoDisparo;
+        var posicion = this.posicionCanion(elapsedTime);
+        if (posicion >= 3) {
+            this.estado = EstadoTorreta.IDLE;
+            this.tiempoDisparo = undefined;
+            posicion = 3;
+        }
+        this.caniones[this.canionActual].cilPos = posicion;
+    }
+};
+
+Torreta.prototype.disparar = function() {
+    if (this.estado === EstadoTorreta.IDLE) {
+        this.estado = EstadoTorreta.FIRING;
+        this.canionActual = (this.canionActual + 1) % 4;
+        this.tiempoDisparo = this.tiempoActual;
     }
 };

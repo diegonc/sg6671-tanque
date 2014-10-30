@@ -173,3 +173,11 @@ Tanque.prototype.draw = function(dc) {
     rdc.mM = mM;
     this.ruedaDelanteraDer.draw(rdc);
 };
+
+Tanque.prototype.update = function(step) {
+    this.baseTorreta.update(step);
+};
+
+Tanque.prototype.disparar = function() {
+    this.baseTorreta.disparar();
+};

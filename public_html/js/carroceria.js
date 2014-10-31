@@ -75,13 +75,45 @@ function Carroceria(color) {
     }
     agregarPoligono(tmpPol, this.vertices, this.normales);
 
+    function calcularMatriz(indice) {
+        var m = mat4.create();
+        mat4.identity(m);
+        if (indice === 0 || indice === 1) {
+            mat4.scale(m, [0.85, 0.95, 1]);
+        }
+        if (indice === 2) {
+            mat4.scale(m, [1.05, 1.3, 1]);
+        }
+        if (indice > 2 && indice < 8) {
+            mat4.scale(m, [1.05, 1.4, 1]);
+        }
+        if (indice === 8) {
+            mat4.scale(m, [1.0, 1.2, 1]);
+        }
+        if (indice === 9) {
+            mat4.scale(m, [0.95, 1.05, 1]);
+        }
+        if (indice === 10 || indice === 11) {
+            mat4.scale(m, [0.8, 0.9, 1]);
+        }
+        return m;
+    }
+
     function postProcesarPoligono(indice, pol) {
         if (indice === 0) {
             for (var i=0; i < pol.normales.length; i++) {
                 pol.normales[i] = [0, 0, -1];
             }
         }
-        if (indice === 8) {
+        if (indice === 6 || indice === 7) {
+            var p1 = pol.puntos[1];
+            var p2 = pol.puntos[2];
+            console.log("indice: " + indice + "; p1: " + vec3.str(p1) + "; p2: " + vec3.str(p2));
+            p1[1] += 1;
+            p2[1] += 1;
+            console.log("indice: " + indice + "; p1: " + vec3.str(p1) + "; p2: " + vec3.str(p2));
+        }
+        if (indice === 11) {
             for (var i=0; i < pol.normales.length; i++) {
                 pol.normales[i] = [0, 0, 1];
             }
@@ -89,13 +121,15 @@ function Carroceria(color) {
     }
 
     // Franjas intermedias que van desde la parte trasera a la delantera
-    var posZfranja = [0, 0, 1.75, 4.32, 6.90, 9.49, 12.40, 15, 15];
+    var posZfranja = [0, 0, 1.75, 4.32, 6.90, 7.89, 7.89, 9.98, 11.30, 12.40, 15, 15];
     var intermedias = posZfranja.length;
     var z;
     for (var i=0; i < intermedias; i++) {
         z = posZfranja[i];
+        var matriz = calcularMatriz(i);
         mat4.identity(m);
         mat4.translate(m, [0, 0, z]);
+        mat4.multiply(m, matriz);
         tmpPol = this.poligono.transformar(m);
         postProcesarPoligono(i, tmpPol);
         franjas++;

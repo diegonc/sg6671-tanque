@@ -24,7 +24,7 @@ function Tanque() {
     function calcularMatrizBaseTorreta() {
         var m = mat4.create();
         mat4.identity(m);
-        mat4.translate(m, [0, 3.68, -3.18]);
+        mat4.translate(m, [0, 2.45, -3.18]);
         mat4.scale(m, [1.5, 1.5, 1.5]);
         return m;
     }

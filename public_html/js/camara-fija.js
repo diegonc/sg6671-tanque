@@ -3,7 +3,16 @@ function CamaraFija(zoom) {
     this.zoomSpeed = 0.5;
     this.maxZoom = 600;
     this.minZoom = 70;
+    this.activated = false;
 }
+
+CamaraFija.prototype.activate = function() {
+    this.activated = true;
+};
+
+CamaraFija.prototype.deactivate = function() {
+    this.activated = false;
+};
 
 CamaraFija.prototype.getMatrix = function() {
     var eye = [0, 0, this.zoom];
@@ -13,6 +22,10 @@ CamaraFija.prototype.getMatrix = function() {
 };
 
 CamaraFija.prototype.handleEvent = function(event) {
+    if (!this.activated) {
+        return true;
+    }
+
     var e = event || window.event;
     var delta = (e.wheelDelta || -e.detail);
     var deltaZoom = this.zoomSpeed * delta;

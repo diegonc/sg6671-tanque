@@ -15,6 +15,7 @@
         <script type="text/javascript" src="js/simulador-fisico.js"></script>
         <script type="text/javascript" src="js/camara-tanque.js"></script>
         <script type="text/javascript" src="js/camara-fija.js"></script>
+        <script type="text/javascript" src="js/camara-lateral.js"></script>
         
         <script type="text/javascript" src="js/tstrip-utils.js"></script>
         <script type="text/javascript" src="js/shader-utils.js"></script>
@@ -42,7 +43,9 @@
             var simulador = new Simulador();
             var camaraTanque = new CamaraTanque(mundo);
             var camaraFija = new CamaraFija(70);
+            var camaraLateral = new CamaraLateral(mundo);
             var camaraActual = camaraFija;
+            camaraActual.activate();
 
             var frame = 0;
 
@@ -198,9 +201,16 @@
                 } else if (actualkey==="F") {
                     mundo.tanque.obj.disparar();
 		} else if (actualkey==="1") {
+                    camaraActual.deactivate();
                     camaraActual = camaraFija;
+                    camaraActual.activate();
                 } else if (actualkey==="2") {
+                    camaraActual.deactivate();
                     camaraActual = camaraTanque;
+                } else if (actualkey==="3") {
+                    camaraActual.deactivate();
+                    camaraActual = camaraLateral;
+                    camaraActual.activate();
                 }
             }
         </script>
